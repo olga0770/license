@@ -2,22 +2,41 @@ import React, {Component} from "react";
 import IUser from "../ITypes";
 import {Grid, Breadcrumbs, Typography} from "@material-ui/core";
 import {Link} from "react-router-dom";
+import {SERVER_URL} from "../constants";
 
 
 interface IUserProps {
     user: IUser;
-    link: string;
 }
 
-
-class UserDetails extends Component {
+class UserDetails extends Component<IUserProps> {
 
     public state: IUserProps = {
         user: {
-            username: '',
-        },
-        link: ''
+            username: ''
+        }
     };
+
+
+    public async componentDidMount() {
+        await this.fetchUsers();
+    }
+
+    fetchUsers = () => {
+        fetch(SERVER_URL + `users/${1}`)
+            .then((response) => response.json())
+            .then((responseData) => {
+                console.log('User Details', responseData);
+                this.setState({
+                    // user: responseData._links.self.href
+                    // user: responseData._embedded.users[0]
+                     user: responseData
+                });
+                console.log('User Details 2', responseData)
+            })
+            .catch(err => console.error(err));
+    };
+
 
     render() {
         return (
@@ -29,7 +48,7 @@ class UserDetails extends Component {
                     </Breadcrumbs>
                 </Grid>
                 <Grid item>
-                <Typography variant="h4" style={{color: 'Grey', marginTop: 15}}>User Details</Typography><br/>
+                <Typography variant="h4" style={{color: 'Grey', marginTop: 15}}>User Details</Typography>
                 <Typography variant="h6">Username: {this.state.user.username}</Typography>
                 </Grid>
             </Grid>

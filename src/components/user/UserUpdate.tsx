@@ -36,7 +36,7 @@ const UserUpdate = (props) => {
     const [user, setUser] = useState<IUser>(userInitialState);
 
     const handleClickOpen = () => {
-        setUser({id: props.user.id, partnerid: props.user.partnerid, username: props.user.username});
+        setUser({id: props.user.id, username: props.user.username});
         setOpen(true);
 
     };

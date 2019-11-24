@@ -1,10 +1,10 @@
 export const userInitialState = {
     id: '',
-    partnerid: '',
-    username: ''
+    // partnerid: '',
+    username: '',
 };
 
 export const partnerInitialState = {
     id: '',
-    companyname: ''
+    companyName: ''
 };

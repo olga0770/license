@@ -6,8 +6,6 @@ import {userInitialState} from "../InitialState";
 import {Breadcrumbs, Divider, Grid, Typography, Card, CardHeader, Avatar, CardContent} from "@material-ui/core";
 
 
-
-
 interface IRouterProps extends RouteComponentProps<IUser>{}
 
 const UserDetails: React.SFC<IRouterProps> = ({match}) => {
@@ -19,16 +17,12 @@ const UserDetails: React.SFC<IRouterProps> = ({match}) => {
     React.useEffect(() => {
         fetch(SERVER_URL +`users/${match.params.id}`)
             .then(res => res.json())
-            .then(res => setUser(res))
+            .then(res => {setUser(res); console.log('user details', res._embedded.partner)})
             .catch(err => {console.log('Getting problems with fetching UserDetails')})
     }, [match.params.id]);
 
     return (
         <React.Fragment key={match.params.id}>
-            {/*{match.params.id}*/}
-            {/*<div>Username: {user.username}</div>*/}
-
-
 
             <Grid container style={{padding: 15}} key={match.params.id}>
 
@@ -58,7 +52,9 @@ const UserDetails: React.SFC<IRouterProps> = ({match}) => {
                             <Typography variant="body1">City:</Typography>
                             <Typography variant="body1">Country:</Typography>
                             <Divider style={{marginBottom: 15}}/>
-                            <Typography variant="h6">Partner:</Typography>
+                            <Typography variant="h6">Partner: </Typography>
+
+                            {/*<Typography variant="h6">Partner: {user._embedded.partner.companyName}</Typography>*/}
                         </CardContent>
 
 

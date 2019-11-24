@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     Dialog,
     DialogActions,
@@ -12,10 +12,11 @@ import {
     Typography,
     Divider
 } from '@material-ui/core';
-import {IUser} from "../ITypes";
+import {IPartner, IUser} from "../ITypes";
 import AddIcon from '@material-ui/icons/Add';
 import {userInitialState} from "../InitialState";
 import { ValidatorForm, TextValidator, SelectValidator} from 'react-material-ui-form-validator';
+import {SERVER_URL} from "../constants";
 
 const useStyles = makeStyles(theme => ({
     fab: {
@@ -64,6 +65,19 @@ const UserCreate = (props) => {
         setUser(userInitialState)
     };
 
+    const [partners, setPartner] = useState<IPartner[]>([]);
+    
+
+    useEffect(() => {
+       fetch(SERVER_URL +'partners')
+           .then(res => res.json())
+           .then(res => {
+               setPartner(res._embedded.partners);
+                    console.log("fetch partners", res._embedded.partners)
+           })
+           .catch(err => {console.log("Problems with fetching partners", err)})
+    }, []);
+
     return (
         <React.Fragment>
             <Fab color="primary" variant="extended" aria-label="like" className={classes.fab} onClick={handleClickOpen} style={{marginLeft: -5}}>
@@ -92,15 +106,13 @@ const UserCreate = (props) => {
                             <Typography variant="body1">Select Partner</Typography>
                             <SelectValidator
                                 id="demo-simple-select"
-                                value={user.partnerid}
-                                name="partnerid"
+                                value={user.username}
+                                name="username"
                                 onChange={handleChange}
                                 validators={['required']}
                                 errorMessages={['this field is required']}
                             >
-                                <MenuItem value={10}>Ten</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
+                                {partners.map((partner: any, index: number) => (<MenuItem key={index} value={partner}>{partner.companyName}</MenuItem>))}
                             </SelectValidator>
                         </FormControl>
 

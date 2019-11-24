@@ -1,8 +1,6 @@
 export interface IUser {
     id: string;
-    // partnerid: string;
     username: string;
-    _embedded?: IUserEmbedded | any;
 }
 
 export interface IPartner {
@@ -10,8 +8,12 @@ export interface IPartner {
     companyName: string;
 }
 
-export interface IUserEmbedded {
-    partner: IPartner | any;
+export interface IEmbeddedPartner {
+    partner: IPartner;
 }
 
+
+export interface IUserDetails extends IUser {
+    _embedded: IEmbeddedPartner | any;
+}
 

@@ -1,18 +1,18 @@
 import React, {useState} from 'react';
-import {IUser} from "../ITypes";
+import {IUserDetails} from "../ITypes";
 import {Link, RouteComponentProps} from "react-router-dom";
 import {SERVER_URL} from "../constants";
-import {userInitialState} from "../InitialState";
+import {userDetailsInitialState} from "../InitialState";
 import {Breadcrumbs, Divider, Grid, Typography, Card, CardHeader, Avatar, CardContent} from "@material-ui/core";
 
 
-interface IRouterProps extends RouteComponentProps<IUser>{}
+interface IRouterProps extends RouteComponentProps<IUserDetails>{}
 
 const UserDetails: React.SFC<IRouterProps> = ({match}) => {
 
     console.log(match);
 
-    const [user, setUser] = useState<IUser>(userInitialState);
+    const [user, setUser] = useState<IUserDetails>(userDetailsInitialState);
 
     React.useEffect(() => {
         fetch(SERVER_URL +`users/${match.params.id}`)
@@ -53,8 +53,7 @@ const UserDetails: React.SFC<IRouterProps> = ({match}) => {
                             <Typography variant="body1">Country:</Typography>
                             <Divider style={{marginBottom: 15}}/>
                             <Typography variant="h6">Partner: </Typography>
-
-                            {/*<Typography variant="h6">Partner: {user._embedded.partner.companyName}</Typography>*/}
+                            <Typography variant="h6">Partner: {user._embedded.partner.companyName}</Typography>
                         </CardContent>
 
 

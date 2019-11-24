@@ -1,95 +1,81 @@
-import React, {Component} from "react";
-import IUser from "../ITypes";
-import {Grid, Breadcrumbs, Typography} from "@material-ui/core";
-import {Link} from "react-router-dom";
+import React, {useState} from 'react';
+import {IUser} from "../ITypes";
+import {Link, RouteComponentProps} from "react-router-dom";
 import {SERVER_URL} from "../constants";
+import {userInitialState} from "../InitialState";
+import {Breadcrumbs, Divider, Grid, Typography, Card, CardHeader, Avatar, CardContent} from "@material-ui/core";
 
 
-interface IUserProps {
-    user: IUser;
-}
-
-class UserDetails extends Component<IUserProps> {
-
-    public state: IUserProps = {
-        user: {
-            username: ''
-        }
-    };
 
 
-    public async componentDidMount() {
-        await this.fetchUsers();
-    }
+interface IRouterProps extends RouteComponentProps<IUser>{}
 
-    fetchUsers = () => {
-        fetch(SERVER_URL + `users/${1}`)
-            .then((response) => response.json())
-            .then((responseData) => {
-                console.log('User Details', responseData);
-                this.setState({
-                    // user: responseData._links.self.href
-                    // user: responseData._embedded.users[0]
-                     user: responseData
-                });
-                console.log('User Details 2', responseData)
-            })
-            .catch(err => console.error(err));
-    };
+const UserDetails: React.SFC<IRouterProps> = ({match}) => {
+
+    console.log(match);
+
+    const [user, setUser] = useState<IUser>(userInitialState);
+
+    React.useEffect(() => {
+        fetch(SERVER_URL +`users/${match.params.id}`)
+            .then(res => res.json())
+            .then(res => setUser(res))
+            .catch(err => {console.log('Getting problems with fetching UserDetails')})
+    }, [match.params.id]);
+
+    return (
+        <React.Fragment key={match.params.id}>
+            {/*{match.params.id}*/}
+            {/*<div>Username: {user.username}</div>*/}
 
 
-    render() {
-        return (
-            <Grid container style={{padding: 15}}>
+
+            <Grid container style={{padding: 15}} key={match.params.id}>
+
                 <Grid item style={{padding: 15}} xs={12}>
                     <Breadcrumbs aria-label="breadcrumb" style={{marginTop: -15}}>
                         <Link to="/" style={{color: 'Grey'}}>Dashboard</Link>
-                        <Typography color="textPrimary">Users</Typography>
+                        <Link to="/users" style={{color: 'Grey'}}>Users</Link>
+                        <Typography color="textPrimary">{user.username}</Typography>
                     </Breadcrumbs>
+
+                    <Typography variant="h4" style={{color: 'Grey', marginTop: 15}}>User: {user.username}</Typography>
+                    <Divider style={{marginBottom: 15}}/>
                 </Grid>
-                <Grid item>
-                <Typography variant="h4" style={{color: 'Grey', marginTop: 15}}>User Details</Typography>
-                <Typography variant="h6">Username: {this.state.user.username}</Typography>
+
+                <Grid item xs={12} sm={6} style={{paddingLeft: 15, paddingRight: 15, paddingTop: 0}}>
+
+                    <Card>
+                        <CardHeader avatar={<Avatar aria-label="recipe">U</Avatar>}/>
+                        <CardContent>
+                            <Typography variant="h5">{user.username}</Typography>
+                            <Divider style={{marginBottom: 15}}/>
+                            <Typography variant="body1">First Name:</Typography>
+                            <Typography variant="body1">Last Name:</Typography>
+                            <Typography variant="body1">E-mail:</Typography>
+                            <Typography variant="body1">Phone Number:</Typography>
+                            <Typography variant="body1">Address:</Typography>
+                            <Typography variant="body1">City:</Typography>
+                            <Typography variant="body1">Country:</Typography>
+                            <Divider style={{marginBottom: 15}}/>
+                            <Typography variant="h6">Partner:</Typography>
+                        </CardContent>
+
+
+                    </Card>
+
+
+
+
                 </Grid>
+
             </Grid>
-        );
-    }
-}
+
+
+
+        </React.Fragment>
+    );
+};
+
 export default UserDetails;
 
-
-
-
-// import React, {useEffect, useState} from 'react';
-// import IUser from "../ITypes";
-// import {SERVER_URL} from "../constants";
-//
-// const UserDetails = (props) => {
-//
-//     const [user, setUser] = useState<IUser>({username: ''});
-//
-//     // useEffect(() => {
-//     //     setUser({username: props.user.username});
-//     // }, []);
-//
-//     // useEffect(() => {
-//     //    fetch(SERVER_URL + `users/${1}`)
-//     //        .then(res => res.json())
-//     //        .then(res => setUser(res))
-//     //        .catch(err => {console.log('Getting User Details problem', err)})
-//     // }, []);
-//
-//     useEffect(() => {
-//         props.getUserDetails(user, props.link);
-//         setUser({username: props.user.username});
-//     }, []);
-//
-//
-//     return (
-//         <div>
-//             {user.username}
-//         </div>
-//     );
-// };
-//
-// export default UserDetails;

@@ -1,19 +1,10 @@
-export default interface IUser {
-    // partnerid: IPartner;
+export interface IUser {
+    id: string;
+    partnerid: string;
     username: string;
-    // _links.self.href
-    // _links: ILinks;
 }
 
-interface ILinks {
-    self: ISelf;
+export interface IPartner {
+    id: string;
+    companyName: string;
 }
-
-interface ISelf {
-    href: string;
-}
-
-
-// export interface IPartner {
-//   companyName: string;
-// }

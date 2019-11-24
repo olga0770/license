@@ -22,7 +22,7 @@ const Dashboard = () => {
         <div className={classes.root}>
             <Grid container spacing={3} style={{padding: 30}}>
 
-                <Grid item xs={2}>
+                <Grid item xs={12} sm={6} md={3} lg={2}>
                     <Paper className={classes.paper}>
                         <Link to="/users">
                             <IconButton>
@@ -33,7 +33,7 @@ const Dashboard = () => {
                     </Paper>
                 </Grid>
 
-                <Grid item xs={2}>
+                <Grid item xs={12} sm={6} md={3} lg={2}>
                     <Paper className={classes.paper}>
                         <Link to="/users">
                             <IconButton>

@@ -9,8 +9,10 @@ import {
     makeStyles,
     TextField
 } from '@material-ui/core';
-import IUser from "../ITypes";
+import {IUser} from "../ITypes";
 import EditIcon from '@material-ui/icons/Edit';
+import {userInitialState} from "../InitialState";
+import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 
 const useStyles = makeStyles(theme => ({
     fab: {
@@ -31,10 +33,10 @@ const UserUpdate = (props) => {
     const classes = useStyles();
 
     const [open, setOpen] = useState(false);
-    const [user, setUser] = useState<IUser>({username: ''});
+    const [user, setUser] = useState<IUser>(userInitialState);
 
     const handleClickOpen = () => {
-        setUser({username: props.user.username});
+        setUser({id: props.user.id, partnerid: props.user.partnerid, username: props.user.username});
         setOpen(true);
 
     };
@@ -58,17 +60,27 @@ const UserUpdate = (props) => {
             <IconButton aria-label="edit" onClick={handleClickOpen}>
                 <EditIcon fontSize="small" />
             </IconButton>
-
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Update User</DialogTitle>
                 <DialogContent>
-                    <TextField autoFocus fullWidth label="Username" name="username"
-                               value={user.username} onChange={handleChange}/>
+                    <ValidatorForm
+                        onSubmit={handleSave}
+                        onError={errors => console.log(errors)}
+                    >
+                        <TextValidator autoFocus fullWidth
+                                       label="Username"
+                                       onChange={handleChange}
+                                       name="username"
+                                       value={user.username}
+                                       validators={['required']}
+                                       errorMessages={['this field is required']}
+                        />
+                        <DialogActions style={{marginRight: -15}}>
+                            <Button variant="outlined" color="secondary" className={classes.button} onClick={handleClose}>Cancel</Button>
+                            <Button type="submit" variant="outlined" color="primary" className={classes.button} >Save</Button>
+                        </DialogActions>
+                    </ValidatorForm>
                 </DialogContent>
-                <DialogActions>
-                    <Button variant="outlined" color="secondary" className={classes.button} onClick={handleClose}>Cancel</Button>
-                    <Button variant="outlined" color="primary" className={classes.button} onClick={handleSave}>Save</Button>
-                </DialogActions>
             </Dialog>
         </div>
     );

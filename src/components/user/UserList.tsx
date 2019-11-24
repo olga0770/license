@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import IUser from "../ITypes";
+import {IUser} from "../ITypes";
 import {SERVER_URL} from "../constants";
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
@@ -7,22 +7,24 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import UserCreate from "./UserCreate";
 import UserUpdate from "./UserUpdate";
-import {Grid, IconButton, Paper, Breadcrumbs, Typography, Divider} from "@material-ui/core";
+import {Grid, IconButton, Paper, Breadcrumbs, Typography, Divider, Badge} from "@material-ui/core";
 import DeleteIcon from '@material-ui/icons/Delete';
 import {Link} from "react-router-dom";
 import InfoIcon from "@material-ui/icons/Info";
-import UserDetails from "./UserDetails";
+import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 
 interface IUserProps {
     users: IUser[];
-    loading: boolean
+    loading: boolean;
+    totalElements: number;
 }
 
 class UserList extends Component {
 
     public state: IUserProps = {
         users: [],
-        loading: true
+        loading: true,
+        totalElements: 0
     };
 
     public async componentDidMount() {
@@ -34,7 +36,7 @@ class UserList extends Component {
             .then((response) => response.json())
             .then((responseData) => {
                 this.setState({
-                    users: responseData._embedded.users, loading: false
+                    users: responseData._embedded.users, loading: false, totalElements: responseData.page.totalElements
                 });
             })
             .catch(err => console.error(err));
@@ -95,50 +97,19 @@ class UserList extends Component {
             )
     }
 
-    // Get User Details
-    // getUserDetails(user, link) {
-    //     fetch(link,
-    //         { method: 'GET',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify(user)
-    //         })
-    //         .then(res => {
-    //             this.fetchUsers();
-    //         })
-    //         .catch(err => console.error(err))
-    // }
-
-
-    // Get User Details
-    // getUserDetails = (link) => {
-    //         fetch(link, {method: 'GET'})
-    //             .then(res => {
-    //                 this.fetchUsers();
-    //             })
-    //             .catch(err => {console.error(err)
-    //             })
-    // };
-
-
-
-
     render() {
         const columns = [
             {
-                id: '_links.self.href',
-                sortable: false,
+                id: 'id',
                 filterable: false,
                 width: 75,
-                accessor: '_links.self.href',
-                // Cell: ({value, row, index}) => (<UserDetails user={row} link={value} getUserDetails={this.getUserDetails} fetchUsers={this.fetchUsers}/>)
+                accessor: 'id',
 
-                Cell: ({ index }) => (
-                    <Link to={`users/${index}`}>
-                    <IconButton>
-                        <InfoIcon fontSize="small" />
-                    </IconButton>
+                Cell: ({ row }) => (
+                    <Link to={`users/${row.id}`}>
+                        <IconButton>
+                            <InfoIcon fontSize="small" />
+                        </IconButton>
                     </Link>
                 )
             },
@@ -146,6 +117,11 @@ class UserList extends Component {
             {
                 Header: 'Username',
                 accessor: 'username'
+            },
+
+            {
+                Header: 'Partner',
+                accessor: '_embedded.partner.companyName'
             },
 
             {
@@ -170,9 +146,6 @@ class UserList extends Component {
             }
         ];
 
-
-
-
         return (
             <Grid container style={{padding: 15}}>
 
@@ -189,6 +162,8 @@ class UserList extends Component {
 
                 <Grid item xs={12} style={{paddingLeft: 15, paddingRight: 15, paddingTop: 0}}>
 
+                    <Badge badgeContent={this.state.totalElements} color="secondary"><PermIdentityIcon /></Badge>
+
                     <Paper>
                         {this.state.loading ? <Typography style={{padding: 15}}>Loading...</Typography>:
                             <ReactTable data={this.state.users} columns={columns}
@@ -196,10 +171,7 @@ class UserList extends Component {
 
                     </Paper>
 
-
-
                 </Grid>
-
                 <ToastContainer autoClose={2000} />
             </Grid>
         );

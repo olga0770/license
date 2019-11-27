@@ -17,7 +17,7 @@ const UserDetails: React.SFC<IRouterProps> = ({match}) => {
     React.useEffect(() => {
         fetch(SERVER_URL +`users/${match.params.id}`)
             .then(res => res.json())
-            .then(res => {setUser(res); console.log('user details', res._embedded.partner)})
+            .then(res => {setUser(res); console.log('user details', res)})
             .catch(err => {console.log('Getting problems with fetching UserDetails')})
     }, [match.params.id]);
 
@@ -52,7 +52,6 @@ const UserDetails: React.SFC<IRouterProps> = ({match}) => {
                             <Typography variant="body1">City:</Typography>
                             <Typography variant="body1">Country:</Typography>
                             <Divider style={{marginBottom: 15}}/>
-                            <Typography variant="h6">Partner: </Typography>
                             <Typography variant="h6">Partner: {user._embedded.partner.companyName}</Typography>
                         </CardContent>
 

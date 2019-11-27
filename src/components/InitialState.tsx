@@ -1,5 +1,6 @@
 export const userInitialState = {
     id: '',
+    partnerId: '',
     username: '',
 };
 
@@ -10,6 +11,12 @@ export const partnerInitialState = {
 
 export const userDetailsInitialState = {
     id: '',
+    partnerId: '',
     username: '',
-    _embedded: {partner: {id: '', companyName: ''}},
+    _embedded: {
+        partner: {
+            id: '',
+            companyName: ''
+        }
+    },
 };

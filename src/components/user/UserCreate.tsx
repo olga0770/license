@@ -12,9 +12,9 @@ import {
     Typography,
     Divider
 } from '@material-ui/core';
-import {IPartner, IUser} from "../ITypes";
+import {IPartner, IUser, IUserDetails} from "../ITypes";
 import AddIcon from '@material-ui/icons/Add';
-import {userInitialState} from "../InitialState";
+import {userDetailsInitialState, userInitialState} from "../InitialState";
 import { ValidatorForm, TextValidator, SelectValidator} from 'react-material-ui-form-validator';
 import {SERVER_URL} from "../constants";
 
@@ -37,7 +37,7 @@ const UserCreate = (props) => {
     const classes = useStyles();
 
     const [open, setOpen] = useState(false);
-    const [user, setUser] = useState<IUser>(userInitialState);
+    const [user, setUser] = useState<IUserDetails>(userDetailsInitialState);
 
     // Open the modal form
     const handleClickOpen = () => {
@@ -62,7 +62,7 @@ const UserCreate = (props) => {
     };
 
     const cleanInput = () => {
-        setUser(userInitialState)
+        setUser(userDetailsInitialState)
     };
 
     const [partners, setPartner] = useState<IPartner[]>([]);
@@ -106,13 +106,13 @@ const UserCreate = (props) => {
                             <Typography variant="body1">Select Partner</Typography>
                             <SelectValidator
                                 id="demo-simple-select"
-                                value={user.username}
-                                name="username"
+                                value={user.partnerId}
+                                name="partnerId"
                                 onChange={handleChange}
                                 validators={['required']}
                                 errorMessages={['this field is required']}
                             >
-                                {partners.map((partner: any, index: number) => (<MenuItem key={index} value={partner}>{partner.companyName}</MenuItem>))}
+                                {partners.map((partner: any, index: number) => (<MenuItem key={index} value={partner.id}>{partner.companyName}</MenuItem>))}
                             </SelectValidator>
                         </FormControl>
 

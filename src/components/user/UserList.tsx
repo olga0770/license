@@ -63,7 +63,7 @@ class UserList extends Component {
 
     // Add new user
     addUser(user) {
-        fetch(SERVER_URL + 'users',
+        fetch(SERVER_URL + 'users/create',
             { method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -1,5 +1,6 @@
 export interface IUser {
     id: string;
+    partnerId: string;
     username: string;
 }
 

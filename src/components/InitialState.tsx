@@ -13,10 +13,8 @@ export const userDetailsInitialState = {
     id: '',
     partnerId: '',
     username: '',
-    _embedded: {
-        partner: {
+    partner: {
             id: '',
             companyName: ''
         }
-    },
 };

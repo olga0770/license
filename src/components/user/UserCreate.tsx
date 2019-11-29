@@ -72,8 +72,8 @@ const UserCreate = (props) => {
        fetch(SERVER_URL +'partners')
            .then(res => res.json())
            .then(res => {
-               setPartner(res._embedded.partners);
-                    console.log("fetch partners", res._embedded.partners)
+               setPartner(res.partners);
+                    console.log("fetch partners", res.partners)
            })
            .catch(err => {console.log("Problems with fetching partners", err)})
     }, []);

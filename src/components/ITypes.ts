@@ -9,12 +9,12 @@ export interface IPartner {
     companyName: string;
 }
 
-export interface IEmbeddedPartner {
-    partner: IPartner;
-}
+// export interface IEmbeddedPartner {
+//     partner: IPartner;
+// }
 
 
 export interface IUserDetails extends IUser {
-    _embedded: IEmbeddedPartner | any;
+    partner: IPartner | any;
 }
 

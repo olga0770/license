@@ -36,7 +36,7 @@ class UserList extends Component {
             .then((response) => response.json())
             .then((responseData) => {
                 this.setState({
-                    users: responseData._embedded.users, loading: false, totalElements: responseData.page.totalElements
+                    users: responseData, loading: false, totalElements: responseData.length
                 });
             })
             .catch(err => console.error(err));
@@ -63,7 +63,7 @@ class UserList extends Component {
 
     // Add new user
     addUser(user) {
-        fetch(SERVER_URL + 'users/create',
+        fetch(SERVER_URL + 'users',
             { method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -78,7 +78,7 @@ class UserList extends Component {
     // Update user
     updateUser(user, link) {
         fetch(link,
-            { method: 'PUT',
+            { method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -120,15 +120,17 @@ class UserList extends Component {
             },
 
             {
+                sortable: false,
+                filterable: false,
                 Header: 'Partner',
-                accessor: '_embedded.partner.companyName'
+                accessor: 'partner.companyName'
             },
 
             {
                 sortable: false,
                 filterable: false,
                 width: 50,
-                accessor: '_links.self.href',
+                accessor: '',
                 Cell: ({value, row}) => (<UserUpdate user={row} link={value} updateUser={this.updateUser} fetchUsers={this.fetchUsers} />)
             },
 
@@ -137,7 +139,7 @@ class UserList extends Component {
                 sortable: false,
                 filterable: false,
                 width: 50,
-                accessor: '_links.self.href',
+                accessor: '',
                 Cell: ({ value }) => (
                     <IconButton aria-label="delete" onClick={()=>{this.onDelClick(value); } }>
                         <DeleteIcon fontSize="small" />

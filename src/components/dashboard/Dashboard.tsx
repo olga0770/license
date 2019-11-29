@@ -26,17 +26,6 @@ const Dashboard = () => {
                     <Paper className={classes.paper}>
                         <Link to="/users">
                             <IconButton>
-                                <PermIdentityIcon style={{ fontSize: 100, color: "silver" }}/>
-                            </IconButton>
-                        </Link>
-                        <Typography variant="h6" style={{ color: "silver" }}>USERS</Typography>
-                    </Paper>
-                </Grid>
-
-                <Grid item xs={12} sm={6} md={3} lg={2}>
-                    <Paper className={classes.paper}>
-                        <Link to="/users">
-                            <IconButton>
                                 <PeopleOutlineIcon style={{ fontSize: 100, color: "silver" }}/>
                             </IconButton>
                         </Link>
@@ -44,6 +33,16 @@ const Dashboard = () => {
                     </Paper>
                 </Grid>
 
+                <Grid item xs={12} sm={6} md={3} lg={2}>
+                    <Paper className={classes.paper}>
+                        <Link to="/users">
+                            <IconButton>
+                                <PermIdentityIcon style={{ fontSize: 100, color: "silver" }}/>
+                            </IconButton>
+                        </Link>
+                        <Typography variant="h6" style={{ color: "silver" }}>USERS</Typography>
+                    </Paper>
+                </Grid>
 
             </Grid>
         </div>

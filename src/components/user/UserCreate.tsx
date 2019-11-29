@@ -66,7 +66,6 @@ const UserCreate = (props) => {
     };
 
     const [partners, setPartner] = useState<IPartner[]>([]);
-    
 
     useEffect(() => {
        fetch(SERVER_URL +'partners')

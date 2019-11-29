@@ -50,7 +50,7 @@ const UserUpdate = (props) => {
     };
 
     const handleSave = () => {
-        props.updateUser(user, props.link);
+        props.updateUser(user, props.link, user.id);
         handleClose();
     };
 

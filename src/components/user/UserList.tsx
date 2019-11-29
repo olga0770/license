@@ -43,9 +43,9 @@ class UserList extends Component {
     };
 
     // Delete user
-    onDelClick = (link) => {
-        if (window.confirm('Are you sure you want to delete it?')) {
-            fetch(link, {method: 'DELETE'})
+    onDelClick = (userId) => {
+        if (window.confirm('Are you sure you want to delete it?' + userId)) {
+            fetch(SERVER_URL +`users/${userId}`, {method: 'DELETE'})
                 .then(res => {
                     toast.success("Deleted", {
                         position: toast.POSITION.BOTTOM_LEFT
@@ -76,8 +76,12 @@ class UserList extends Component {
 
 
     // Update user
-    updateUser(user, link) {
-        fetch(link,
+    updateUser(user, link, userId) {
+        const url = SERVER_URL + `users/${userId}`;
+        // console.log(url);
+        // console.log(link);
+        console.log(user);
+        fetch(url,
             { method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -85,10 +89,18 @@ class UserList extends Component {
                 body: JSON.stringify(user)
             })
             .then(res => {
-                toast.success("Updated", {
-                    position: toast.POSITION.BOTTOM_LEFT
-                });
-                this.fetchUsers();
+                if (res.status < 400) {
+                    toast.success("Updated", {
+                        position: toast.POSITION.BOTTOM_LEFT
+                    });
+                    this.fetchUsers();
+                }
+                else {
+                    console.log('error:' + res.status);
+                    toast.error("Error when updating", {
+                        position: toast.POSITION.BOTTOM_LEFT
+                    })
+                }
             })
             .catch(err =>
                 toast.error("Error when updating", {
@@ -131,7 +143,10 @@ class UserList extends Component {
                 filterable: false,
                 width: 50,
                 accessor: '',
-                Cell: ({value, row}) => (<UserUpdate user={row} link={value} updateUser={this.updateUser} fetchUsers={this.fetchUsers} />)
+                Cell: ({value, row}) => (
+                    <UserUpdate user={row} link={value} updateUser={this.updateUser} fetchUsers={this.fetchUsers}
+                    />
+                    )
             },
 
             {
@@ -140,8 +155,8 @@ class UserList extends Component {
                 filterable: false,
                 width: 50,
                 accessor: '',
-                Cell: ({ value }) => (
-                    <IconButton aria-label="delete" onClick={()=>{this.onDelClick(value); } }>
+                Cell: ({ row }) => (
+                    <IconButton aria-label="delete" onClick={()=>{this.onDelClick(row.id); } }>
                         <DeleteIcon fontSize="small" />
                     </IconButton>
                 )

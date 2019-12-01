@@ -7,11 +7,11 @@ import {
     DialogTitle, Divider, FormControl,
     IconButton,
     makeStyles, MenuItem,
-    TextField, Typography
+    TextField, Typography, InputLabel, Select
 } from '@material-ui/core';
 import {IPartner, IUser} from "../ITypes";
 import EditIcon from '@material-ui/icons/Edit';
-import {userInitialState} from "../InitialState";
+import {userDetailsInitialState, userInitialState} from "../InitialState";
 import { ValidatorForm, TextValidator, SelectValidator} from 'react-material-ui-form-validator';
 import {SERVER_URL} from "../constants";
 
@@ -96,7 +96,7 @@ const UserUpdate = (props) => {
                             <Typography variant="body1">Select Partner</Typography>
                             <SelectValidator
                                 id="demo-simple-select"
-                                value={user.partnerId}
+                                value={user.partnerId || ''}
                                 name="partnerId"
                                 onChange={handleChange}
                                 validators={['required']}
@@ -105,6 +105,7 @@ const UserUpdate = (props) => {
                                 {partners.map((partner: any, index: number) => (<MenuItem key={index} value={partner.id}>{partner.companyName}</MenuItem>))}
                             </SelectValidator>
                         </FormControl>
+
 
                         <DialogActions style={{marginRight: -15}}>
                             <Button variant="outlined" color="secondary" className={classes.button} onClick={handleClose}>Cancel</Button>

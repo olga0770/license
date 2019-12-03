@@ -3,6 +3,7 @@ import {makeStyles, Grid, Paper, IconButton, Typography} from "@material-ui/core
 import {Link} from "react-router-dom";
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
+import Nav from "../nav/Nav";
 
 
 const useStyles = makeStyles(theme => ({
@@ -20,6 +21,8 @@ const Dashboard = () => {
 
     return (
         <div className={classes.root}>
+            <Nav/>
+
             <Grid container spacing={3} style={{padding: 30}}>
 
                 <Grid item xs={12} sm={6} md={3} lg={2}>

@@ -37,7 +37,7 @@ const UserUpdate = (props) => {
     const [user, setUser] = useState<IUser>(userInitialState);
 
     const handleClickOpen = () => {
-        setUser({id: props.user.id, partnerId: props.user.partnerId, username: props.user.username});
+        setUser({id: props.user.id, partnerId: props.user.partnerId, username: props.user.username, password: props.user.password});
         setOpen(true);
 
     };
@@ -58,7 +58,15 @@ const UserUpdate = (props) => {
     const [partners, setPartner] = useState<IPartner[]>([]);
 
     useEffect(() => {
-        fetch(SERVER_URL +'partners')
+        const token = sessionStorage.getItem("jwt");
+        fetch(SERVER_URL +'partners',
+            {
+                method: "GET",
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }
+        )
             .then(res => res.json())
             .then(res => {
                 setPartner(res);

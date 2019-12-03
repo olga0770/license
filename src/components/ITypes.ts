@@ -2,6 +2,7 @@ export interface IUser {
     id: string;
     partnerId: string;
     username: string;
+    password: string;
 }
 
 export interface IPartner {

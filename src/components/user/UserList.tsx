@@ -12,6 +12,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import {Link} from "react-router-dom";
 import InfoIcon from "@material-ui/icons/Info";
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
+import Nav from "../nav/Nav";
 
 interface IUserProps {
     users: IUser[];
@@ -32,7 +33,16 @@ class UserList extends Component {
     }
 
     fetchUsers = () => {
-        fetch(SERVER_URL + 'users')
+        const token = sessionStorage.getItem("jwt");
+        fetch(SERVER_URL + 'users',
+            {
+
+                method: "GET",
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }
+        )
             .then((response) => response.json())
             .then((responseData) => {
                 this.setState({
@@ -45,7 +55,13 @@ class UserList extends Component {
     // Delete user
     onDelClick = (userId) => {
         if (window.confirm('Are you sure you want to delete it?' + userId)) {
-            fetch(SERVER_URL +`users/${userId}`, {method: 'DELETE'})
+            const token = sessionStorage.getItem("jwt");
+            fetch(SERVER_URL +`users/${userId}`,
+                {method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
                 .then(res => {
                     toast.success("Deleted", {
                         position: toast.POSITION.BOTTOM_LEFT
@@ -63,10 +79,12 @@ class UserList extends Component {
 
     // Add new user
     addUser(user) {
+        const token = sessionStorage.getItem("jwt");
         fetch(SERVER_URL + 'users',
             { method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify(user)
             })
@@ -78,13 +96,12 @@ class UserList extends Component {
     // Update user
     updateUser(user, link, userId) {
         const url = SERVER_URL + `users/${userId}`;
-        // console.log(url);
-        // console.log(link);
-        console.log(user);
+        const token = sessionStorage.getItem("jwt");
         fetch(url,
             { method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify(user)
             })
@@ -146,7 +163,7 @@ class UserList extends Component {
                 Cell: ({value, row}) => (
                     <UserUpdate user={row} link={value} updateUser={this.updateUser} fetchUsers={this.fetchUsers}
                     />
-                    )
+                )
             },
 
             {
@@ -164,33 +181,35 @@ class UserList extends Component {
         ];
 
         return (
-            <Grid container style={{padding: 15}}>
+            <React.Fragment>
+                <Nav/>
+                <Grid container style={{padding: 15}}>
 
-                <Grid item style={{padding: 15}} xs={12}>
-                    <Breadcrumbs aria-label="breadcrumb" style={{marginTop: -15}}>
-                        <Link to="/" style={{color: 'Grey'}}>Dashboard</Link>
-                        <Typography color="textPrimary">Users</Typography>
-                    </Breadcrumbs>
+                    <Grid item style={{padding: 15}} xs={12}>
+                        <Breadcrumbs aria-label="breadcrumb" style={{marginTop: -15}}>
+                            <Link to="/dashboard" style={{color: 'Grey'}}>Dashboard</Link>
+                            <Typography color="textPrimary">Users</Typography>
+                        </Breadcrumbs>
 
-                    <Typography variant="h4" style={{color: 'Grey', marginTop: 15}}>Users</Typography>
-                    <Divider style={{marginBottom: 15}}/>
-                    <UserCreate addUser={this.addUser} fetchUsers={this.fetchUsers} />
+                        <Typography variant="h4" style={{color: 'Grey', marginTop: 15}}>Users</Typography>
+                        <Divider style={{marginBottom: 15}}/>
+                        <UserCreate addUser={this.addUser} fetchUsers={this.fetchUsers} />
+                    </Grid>
+
+                    <Grid item xs={12} style={{paddingLeft: 15, paddingRight: 15, paddingTop: 0}}>
+
+                        <Badge badgeContent={this.state.totalElements} color="secondary"><PermIdentityIcon /></Badge>
+
+                        <Paper>
+                            {this.state.loading ? <Typography style={{padding: 15}}>Loading...</Typography>:
+                                <ReactTable data={this.state.users} columns={columns}
+                                            filterable={true} pageSize={5} className="-striped -highlight" />}
+                        </Paper>
+
+                    </Grid>
+                    <ToastContainer autoClose={2000} />
                 </Grid>
-
-                <Grid item xs={12} style={{paddingLeft: 15, paddingRight: 15, paddingTop: 0}}>
-
-                    <Badge badgeContent={this.state.totalElements} color="secondary"><PermIdentityIcon /></Badge>
-
-                    <Paper>
-                        {this.state.loading ? <Typography style={{padding: 15}}>Loading...</Typography>:
-                            <ReactTable data={this.state.users} columns={columns}
-                                        filterable={true} pageSize={5} className="-striped -highlight" />}
-
-                    </Paper>
-
-                </Grid>
-                <ToastContainer autoClose={2000} />
-            </Grid>
+            </React.Fragment>
         );
     }
 }

@@ -68,13 +68,21 @@ const UserCreate = (props) => {
     const [partners, setPartner] = useState<IPartner[]>([]);
 
     useEffect(() => {
-       fetch(SERVER_URL +'partners')
-           .then(res => res.json())
-           .then(res => {
-               setPartner(res);
-                    console.log("fetch partners", res)
-           })
-           .catch(err => {console.log("Problems with fetching partners", err)})
+        const token = sessionStorage.getItem("jwt");
+        fetch(SERVER_URL +'partners',
+            {
+                method: "GET",
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }
+        )
+            .then(res => res.json())
+            .then(res => {
+                setPartner(res);
+                console.log("fetch partners", res)
+            })
+            .catch(err => {console.log("Problems with fetching partners", err)})
     }, []);
 
     return (

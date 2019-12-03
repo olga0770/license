@@ -4,6 +4,7 @@ import {Link, RouteComponentProps} from "react-router-dom";
 import {SERVER_URL} from "../constants";
 import {userDetailsInitialState} from "../InitialState";
 import {Breadcrumbs, Divider, Grid, Typography, Card, CardHeader, Avatar, CardContent} from "@material-ui/core";
+import Nav from "../nav/Nav";
 
 
 interface IRouterProps extends RouteComponentProps<IUserDetails>{}
@@ -15,7 +16,15 @@ const UserDetails: React.SFC<IRouterProps> = ({match}) => {
     const [user, setUser] = useState<IUserDetails>(userDetailsInitialState);
 
     React.useEffect(() => {
-        fetch(SERVER_URL +`users/${match.params.id}`)
+        const token = sessionStorage.getItem("jwt");
+        fetch(SERVER_URL +`users/${match.params.id}`,
+            {
+                method: "GET",
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }
+        )
             .then(res => res.json())
             .then(res => {setUser(res); console.log('user details', res)})
             .catch(err => {console.log('Getting problems with fetching UserDetails')})
@@ -23,12 +32,13 @@ const UserDetails: React.SFC<IRouterProps> = ({match}) => {
 
     return (
         <React.Fragment key={match.params.id}>
+            <Nav/>
 
             <Grid container style={{padding: 15}} key={match.params.id}>
 
                 <Grid item style={{padding: 15}} xs={12}>
                     <Breadcrumbs aria-label="breadcrumb" style={{marginTop: -15}}>
-                        <Link to="/" style={{color: 'Grey'}}>Dashboard</Link>
+                        <Link to="/dashboard" style={{color: 'Grey'}}>Dashboard</Link>
                         <Link to="/users" style={{color: 'Grey'}}>Users</Link>
                         <Typography color="textPrimary">{user.username}</Typography>
                     </Breadcrumbs>
@@ -54,12 +64,7 @@ const UserDetails: React.SFC<IRouterProps> = ({match}) => {
                             <Divider style={{marginBottom: 15}}/>
                             <Typography variant="h6">Partner: {user.partner.companyName}</Typography>
                         </CardContent>
-
-
                     </Card>
-
-
-
 
                 </Grid>
 

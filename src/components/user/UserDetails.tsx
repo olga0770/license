@@ -50,7 +50,7 @@ const UserDetails: React.SFC<IRouterProps> = ({match}) => {
 
 
             <Grid container spacing={0} alignItems="center" justify="center">
-                <Grid item xs={12} sm={6} md={3}>
+                <Grid item xs={12} sm={10} md={6} lg={3}>
 
                     <Card>
                         <CardHeader avatar={<Avatar aria-label="recipe">U</Avatar>}/>

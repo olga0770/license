@@ -40,10 +40,10 @@ const Nav = () => {
                         <Link to="/dashboard" style={{color: 'Grey'}}>Dashboard</Link>
                     </MenuItem>
                     < MenuItem >
-                        < Link to="/users" style={{color: 'Grey'}}>Users</Link>
+                        < Link to="/partners" style={{color: 'Grey'}}>Partners</Link>
                     </MenuItem>
                     <MenuItem className={classes.title}>
-                        <Link to="/users" style={{color: 'Grey'}}>Partners</Link>
+                        <Link to="/users" style={{color: 'Grey'}}>Users</Link>
                     </MenuItem>
 
                     <MenuItem onClick={logout}>< Link to="/login" style={{color: 'Grey'}}>Logout</Link></MenuItem>

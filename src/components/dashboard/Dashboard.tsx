@@ -27,7 +27,7 @@ const Dashboard = () => {
 
                 <Grid item xs={12} sm={6} md={3} lg={2}>
                     <Paper className={classes.paper}>
-                        <Link to="/users">
+                        <Link to="/partners">
                             <IconButton>
                                 <PeopleOutlineIcon style={{ fontSize: 100, color: "silver" }}/>
                             </IconButton>

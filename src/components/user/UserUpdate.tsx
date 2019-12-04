@@ -4,14 +4,14 @@ import {
     Dialog,
     DialogActions,
     DialogContent,
-    DialogTitle, Divider, FormControl,
+    DialogTitle, Divider, FormControl, Grid,
     IconButton,
     makeStyles, MenuItem,
-    TextField, Typography, InputLabel, Select
+    Typography
 } from '@material-ui/core';
 import {IPartner, IUser} from "../ITypes";
 import EditIcon from '@material-ui/icons/Edit';
-import {userDetailsInitialState, userInitialState} from "../InitialState";
+import {userInitialState} from "../InitialState";
 import { ValidatorForm, TextValidator, SelectValidator} from 'react-material-ui-form-validator';
 import {SERVER_URL} from "../constants";
 
@@ -37,7 +37,20 @@ const UserUpdate = (props) => {
     const [user, setUser] = useState<IUser>(userInitialState);
 
     const handleClickOpen = () => {
-        setUser({id: props.user.id, partnerId: props.user.partnerId, username: props.user.username, password: props.user.password});
+        setUser({
+            id: props.user.id,
+            partnerId: props.user.partnerId,
+            username: props.user.username,
+            password: props.user.password,
+            firstName: props.user.firstName,
+            lastName: props.user.lastName,
+            email: props.user.email,
+            phone: props.user.phone,
+            address: props.user.address,
+            zip: props.user.zip,
+            city: props.user.city,
+            country: props.user.country
+        });
         setOpen(true);
 
     };
@@ -51,7 +64,7 @@ const UserUpdate = (props) => {
     };
 
     const handleSave = () => {
-        props.updateUser(user, props.link, user.id);
+        props.updateUser(user, props.user.id);
         handleClose();
     };
 
@@ -78,7 +91,7 @@ const UserUpdate = (props) => {
 
     return (
         <div>
-            <IconButton aria-label="edit" onClick={handleClickOpen}>
+            <IconButton aria-label="edit" onClick={handleClickOpen} style={{marginTop: -10}}>
                 <EditIcon fontSize="small" />
             </IconButton>
             <Dialog open={open} onClose={handleClose}>
@@ -88,31 +101,144 @@ const UserUpdate = (props) => {
                         onSubmit={handleSave}
                         onError={errors => console.log(errors)}
                     >
-                        <FormControl fullWidth>
-                            <TextValidator autoFocus fullWidth
-                                           label="Username"
-                                           onChange={handleChange}
-                                           name="username"
-                                           value={user.username}
-                                           validators={['required']}
-                                           errorMessages={['this field is required']}
-                            />
-                        </FormControl>
+                        <Grid container spacing={3} style={{padding: 30}}>
 
-                        <FormControl fullWidth style={{marginTop: 30, marginBottom: 15}}>
-                            <Divider/>
-                            <Typography variant="body1">Select Partner</Typography>
-                            <SelectValidator
-                                id="demo-simple-select"
-                                value={user.partnerId || ''}
-                                name="partnerId"
-                                onChange={handleChange}
-                                validators={['required']}
-                                errorMessages={['this field is required']}
-                            >
-                                {partners.map((partner: any, index: number) => (<MenuItem key={index} value={partner.id}>{partner.companyName}</MenuItem>))}
-                            </SelectValidator>
-                        </FormControl>
+                            <Grid item xs={12} sm={12} md={6}>
+
+                                <FormControl fullWidth>
+                                    <TextValidator autoFocus fullWidth
+                                                   label="Username"
+                                                   onChange={handleChange}
+                                                   name="username"
+                                                   value={user.username}
+                                                   validators={['required']}
+                                                   errorMessages={['this field is required']}
+                                    />
+                                </FormControl>
+
+                                <FormControl fullWidth>
+                                    <TextValidator autoFocus fullWidth style={{marginTop: 30}}
+                                                   label="Password"
+                                                   onChange={handleChange}
+                                                   name="password"
+                                                   value={user.password}
+                                                   validators={['required']}
+                                                   errorMessages={['this field is required']}
+                                    />
+                                </FormControl>
+
+                                <FormControl fullWidth>
+                                    <TextValidator autoFocus fullWidth style={{marginTop: 30}}
+                                                   label="First Name"
+                                                   onChange={handleChange}
+                                                   name="firstName"
+                                                   value={user.firstName}
+                                                   validators={['required']}
+                                                   errorMessages={['this field is required']}
+                                    />
+                                </FormControl>
+
+                                <FormControl fullWidth>
+                                    <TextValidator autoFocus fullWidth style={{marginTop: 30}}
+                                                   label="Last Name"
+                                                   onChange={handleChange}
+                                                   name="lastName"
+                                                   value={user.lastName}
+                                                   validators={['required']}
+                                                   errorMessages={['this field is required']}
+                                    />
+                                </FormControl>
+
+                                <FormControl fullWidth>
+                                    <TextValidator autoFocus fullWidth style={{marginTop: 30}}
+                                                   label="E-mail"
+                                                   onChange={handleChange}
+                                                   name="email"
+                                                   value={user.email}
+                                                   validators={['required', 'isEmail']}
+                                                   errorMessages={['this field is required', 'email is not valid']}
+                                    />
+                                </FormControl>
+
+                            </Grid>
+
+                            <Grid item xs={12} sm={12} md={6}>
+
+                                <FormControl fullWidth>
+                                    <TextValidator autoFocus fullWidth
+                                                   label="Phone"
+                                                   onChange={handleChange}
+                                                   name="phone"
+                                                   value={user.phone}
+                                                   validators={['required']}
+                                                   errorMessages={['this field is required']}
+                                    />
+                                </FormControl>
+
+                                <FormControl fullWidth>
+                                    <TextValidator autoFocus fullWidth style={{marginTop: 30}}
+                                                   label="Address"
+                                                   onChange={handleChange}
+                                                   name="address"
+                                                   value={user.address}
+                                                   validators={['required']}
+                                                   errorMessages={['this field is required']}
+                                    />
+                                </FormControl>
+
+                                <FormControl fullWidth>
+                                    <TextValidator autoFocus fullWidth style={{marginTop: 30}}
+                                                   label="ZIP"
+                                                   onChange={handleChange}
+                                                   name="zip"
+                                                   value={user.zip}
+                                                   validators={['required']}
+                                                   errorMessages={['this field is required']}
+                                    />
+                                </FormControl>
+
+                                <FormControl fullWidth>
+                                    <TextValidator autoFocus fullWidth style={{marginTop: 30}}
+                                                   label="City"
+                                                   onChange={handleChange}
+                                                   name="city"
+                                                   value={user.city}
+                                                   validators={['required']}
+                                                   errorMessages={['this field is required']}
+                                    />
+                                </FormControl>
+
+                                <FormControl fullWidth>
+                                    <TextValidator autoFocus fullWidth style={{marginTop: 30}}
+                                                   label="Country"
+                                                   onChange={handleChange}
+                                                   name="country"
+                                                   value={user.country}
+                                                   validators={['required']}
+                                                   errorMessages={['this field is required']}
+                                    />
+                                </FormControl>
+
+                            </Grid>
+
+                            <Grid item xs={12}>
+                                <FormControl fullWidth style={{marginTop: 30, marginBottom: 15}}>
+                                    <Divider/>
+                                    <Typography variant="body1">Select Partner</Typography>
+                                    <SelectValidator
+                                        id="demo-simple-select"
+                                        value={user.partnerId || ''}
+                                        name="partnerId"
+                                        onChange={handleChange}
+                                        validators={['required']}
+                                        errorMessages={['this field is required']}
+                                    >
+                                        {partners.map((partner: any, index: number) => (<MenuItem key={index} value={partner.id}>{partner.companyName}</MenuItem>))}
+                                    </SelectValidator>
+                                </FormControl>
+                            </Grid>
+
+                        </Grid>
 
 
                         <DialogActions style={{marginRight: -15}}>

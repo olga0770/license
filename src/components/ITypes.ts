@@ -3,16 +3,20 @@ export interface IUser {
     partnerId: string;
     username: string;
     password: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    address: string;
+    zip: string;
+    city: string;
+    country: string;
 }
 
 export interface IPartner {
     id: string;
     companyName: string;
 }
-
-// export interface IEmbeddedPartner {
-//     partner: IPartner;
-// }
 
 
 export interface IUserDetails extends IUser {

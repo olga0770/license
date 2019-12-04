@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
-import {AppBar, Toolbar, Typography, MenuItem, Divider, makeStyles, Button} from "@material-ui/core";
-import {Link, Redirect, Router} from "react-router-dom";
-import {createBrowserHistory as createHistory } from "history";
+import {AppBar, Toolbar, Typography, MenuItem, Divider, makeStyles} from "@material-ui/core";
+import {Link, Redirect} from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -15,7 +14,6 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const history = createHistory();
 
 const Nav = () => {
     const classes = useStyles();
@@ -25,7 +23,6 @@ const Nav = () => {
     const logout = () => {
         sessionStorage.removeItem("jwt");
         setAuth(false);
-        // history.push("/login");
     };
 
     if (isAuthenticated === false) {

@@ -12,13 +12,10 @@ import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import {Redirect} from "react-router-dom";
-import {useAuth} from "../../context/auth";
-
 
 const Login = props => {
     const [user, setUser] = useState({username: '', password: ''});
     const [isAuthenticated, setAuth] = useState(false);
-    // const {setAuthToken} = useAuth();
 
     const handleChange = (event) => {
         setUser({...user, [event.target.name] : event.target.value})
@@ -34,7 +31,6 @@ const Login = props => {
                 if (jwtToken !== null) {
                     sessionStorage.setItem("jwt", jwtToken);
                     setAuth(true);
-                    // history.push("/dashboard");
                 }
                 else {
                     toast.warn("Check your username and password", {

@@ -2,7 +2,15 @@ export const userInitialState = {
     id: '',
     partnerId: '',
     username: '',
-    password: ''
+    password: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    address: '',
+    zip: '',
+    city: '',
+    country: ''
 };
 
 export const partnerInitialState = {
@@ -15,6 +23,14 @@ export const userDetailsInitialState = {
     partnerId: '',
     username: '',
     password: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    address: '',
+    zip: '',
+    city: '',
+    country: '',
     partner: {
             id: '',
             companyName: ''

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {IUserDetails} from "../ITypes";
-import {Link, RouteComponentProps} from "react-router-dom";
+import {Link, RouteComponentProps, withRouter} from "react-router-dom";
 import {SERVER_URL} from "../constants";
 import {userDetailsInitialState} from "../InitialState";
 import {Breadcrumbs, Divider, Grid, Typography, Card, CardHeader, Avatar, CardContent} from "@material-ui/core";
@@ -46,21 +46,25 @@ const UserDetails: React.SFC<IRouterProps> = ({match}) => {
                     <Typography variant="h4" style={{color: 'Grey', marginTop: 15}}>User: {user.username}</Typography>
                     <Divider style={{marginBottom: 15}}/>
                 </Grid>
+            </Grid>
 
-                <Grid item xs={12} sm={6} style={{paddingLeft: 15, paddingRight: 15, paddingTop: 0}}>
+
+            <Grid container spacing={0} alignItems="center" justify="center">
+                <Grid item xs={12} sm={6} md={3}>
 
                     <Card>
                         <CardHeader avatar={<Avatar aria-label="recipe">U</Avatar>}/>
                         <CardContent>
                             <Typography variant="h5">{user.username}</Typography>
                             <Divider style={{marginBottom: 15}}/>
-                            <Typography variant="body1">First Name:</Typography>
-                            <Typography variant="body1">Last Name:</Typography>
-                            <Typography variant="body1">E-mail:</Typography>
-                            <Typography variant="body1">Phone Number:</Typography>
-                            <Typography variant="body1">Address:</Typography>
-                            <Typography variant="body1">City:</Typography>
-                            <Typography variant="body1">Country:</Typography>
+                            <Typography variant="body1"><span style={{display: "inline-block", width: 150}}><b>First Name:</b></span> <span>{user.firstName}</span></Typography>
+                            <Typography variant="body1"><span style={{display: "inline-block", width: 150}}><b>Last Name:</b></span> <span>{user.lastName}</span></Typography>
+                            <Typography variant="body1"><span style={{display: "inline-block", width: 150}}><b>E-mail:</b></span> <span>{user.email}</span></Typography>
+                            <Typography variant="body1"><span style={{display: "inline-block", width: 150}}><b>Phone:</b></span> <span>{user.phone}</span></Typography>
+                            <Typography variant="body1"><span style={{display: "inline-block", width: 150}}><b>Address:</b></span> <span>{user.address}</span></Typography>
+                            <Typography variant="body1"><span style={{display: "inline-block", width: 150}}><b>ZIP:</b></span> <span>{user.zip}</span></Typography>
+                            <Typography variant="body1"><span style={{display: "inline-block", width: 150}}><b>City:</b></span> <span>{user.city}</span></Typography>
+                            <Typography variant="body1"><span style={{display: "inline-block", width: 150}}><b>Country:</b></span> <span>{user.country}</span></Typography>
                             <Divider style={{marginBottom: 15}}/>
                             <Typography variant="h6">Partner: {user.partner.companyName}</Typography>
                         </CardContent>
@@ -76,5 +80,5 @@ const UserDetails: React.SFC<IRouterProps> = ({match}) => {
     );
 };
 
-export default UserDetails;
+export default withRouter(UserDetails);
 

@@ -54,7 +54,7 @@ class UserList extends Component {
 
     // Delete user
     onDelClick = (userId) => {
-        if (window.confirm('Are you sure you want to delete it?' + userId)) {
+        if (window.confirm('Are you sure you want to delete it?')) {
             const token = sessionStorage.getItem("jwt");
             fetch(SERVER_URL +`users/${userId}`,
                 {method: 'DELETE',
@@ -88,13 +88,26 @@ class UserList extends Component {
                 },
                 body: JSON.stringify(user)
             })
-            .then(res => this.fetchUsers())
+            .then(res => {
+                if (res.status < 400) {
+                    toast.success("Created", {
+                        position: toast.POSITION.BOTTOM_LEFT
+                    });
+                    this.fetchUsers();
+                }
+                else {
+                    console.log('error:' + res.status);
+                    toast.error("Error when creating", {
+                        position: toast.POSITION.BOTTOM_LEFT
+                    })
+                }
+            })
             .catch(err => console.error(err))
     }
 
 
     // Update user
-    updateUser(user, link, userId) {
+    updateUser(user, userId) {
         const url = SERVER_URL + `users/${userId}`;
         const token = sessionStorage.getItem("jwt");
         fetch(url,
@@ -131,12 +144,12 @@ class UserList extends Component {
             {
                 id: 'id',
                 filterable: false,
-                width: 75,
+                width: 50,
                 accessor: 'id',
 
                 Cell: ({ row }) => (
                     <Link to={`users/${row.id}`}>
-                        <IconButton>
+                        <IconButton style={{marginTop: -10}}>
                             <InfoIcon fontSize="small" />
                         </IconButton>
                     </Link>
@@ -146,6 +159,51 @@ class UserList extends Component {
             {
                 Header: 'Username',
                 accessor: 'username'
+            },
+
+            {
+                Header: 'Password',
+                accessor: 'password'
+            },
+
+            {
+                Header: 'First Name',
+                accessor: 'firstName'
+            },
+
+            {
+                Header: 'Last Name',
+                accessor: 'lastName'
+            },
+
+            {
+                Header: 'E-mail',
+                accessor: 'email'
+            },
+
+            {
+                Header: 'Phone',
+                accessor: 'phone'
+            },
+
+            {
+                Header: 'Address',
+                accessor: 'address'
+            },
+
+            {
+                Header: 'ZIP',
+                accessor: 'zip'
+            },
+
+            {
+                Header: 'City',
+                accessor: 'city'
+            },
+
+            {
+                Header: 'Country',
+                accessor: 'country'
             },
 
             {
@@ -161,7 +219,7 @@ class UserList extends Component {
                 width: 50,
                 accessor: '',
                 Cell: ({value, row}) => (
-                    <UserUpdate user={row} link={value} updateUser={this.updateUser} fetchUsers={this.fetchUsers}
+                    <UserUpdate user={row} userId={value} updateUser={this.updateUser} fetchUsers={this.fetchUsers}
                     />
                 )
             },
@@ -173,7 +231,7 @@ class UserList extends Component {
                 width: 50,
                 accessor: '',
                 Cell: ({ row }) => (
-                    <IconButton aria-label="delete" onClick={()=>{this.onDelClick(row.id); } }>
+                    <IconButton aria-label="delete" onClick={()=>{this.onDelClick(row.id); } } style={{marginTop: -10}}>
                         <DeleteIcon fontSize="small" />
                     </IconButton>
                 )
@@ -207,7 +265,7 @@ class UserList extends Component {
                         </Paper>
 
                     </Grid>
-                    <ToastContainer autoClose={2000} />
+                    <ToastContainer autoClose={3000} />
                 </Grid>
             </React.Fragment>
         );

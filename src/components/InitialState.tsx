@@ -10,7 +10,8 @@ export const userInitialState = {
     address: '',
     zip: '',
     city: '',
-    country: ''
+    country: '',
+    role: 'USER'
 };
 
 export const partnerInitialState = {
@@ -31,6 +32,7 @@ export const userDetailsInitialState = {
     zip: '',
     city: '',
     country: '',
+    role: 'USER',
     partner: {
             id: '',
             companyName: ''

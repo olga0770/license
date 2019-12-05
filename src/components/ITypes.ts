@@ -11,6 +11,7 @@ export interface IUser {
     zip: string;
     city: string;
     country: string;
+    role: string;
 }
 
 export interface IPartner {

@@ -49,7 +49,8 @@ const UserUpdate = (props) => {
             address: props.user.address,
             zip: props.user.zip,
             city: props.user.city,
-            country: props.user.country
+            country: props.user.country,
+            role: props.user.role
         });
         setOpen(true);
 

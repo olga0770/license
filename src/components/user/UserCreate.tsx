@@ -216,6 +216,8 @@ const UserCreate = (props) => {
                                     />
                                 </FormControl>
 
+                                <input type="hidden" name="role" value={user.role}/>
+
                             </Grid>
 
                             <Grid item xs={12}>

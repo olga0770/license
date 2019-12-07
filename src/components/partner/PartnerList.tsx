@@ -96,9 +96,9 @@ class PartnerList extends Component {
 
                     <Grid item xs={12} style={{paddingLeft: 15, paddingRight: 15, paddingTop: 0}}>
 
-                        <Badge badgeContent={this.state.totalElements} color="secondary"><PermIdentityIcon /></Badge>
+                        <Badge badgeContent={this.state.totalElements} color="secondary" style={{position: "absolute", right: 40}}><PermIdentityIcon /></Badge>
 
-                        <Paper>
+                        <Paper style={{marginTop: 30}}>
                             {this.state.loading ? <Typography style={{padding: 15}}>Loading...</Typography>:
                                 <ReactTable data={this.state.partners} columns={columns}
                                             filterable={true} pageSize={5} className="-striped -highlight" />}

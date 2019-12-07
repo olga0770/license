@@ -24,3 +24,7 @@ export interface IUserDetails extends IUser {
     partner: IPartner | any;
 }
 
+export interface IPartnerDetails extends IPartner{
+    users: IUser[];
+}
+

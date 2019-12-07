@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {IUserDetails} from "../ITypes";
 import {Link, RouteComponentProps, withRouter} from "react-router-dom";
 import {SERVER_URL} from "../constants";
@@ -15,7 +15,7 @@ const UserDetails: React.SFC<IRouterProps> = ({match}) => {
 
     const [user, setUser] = useState<IUserDetails>(userDetailsInitialState);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const token = sessionStorage.getItem("jwt");
         fetch(SERVER_URL +`users/${match.params.id}`,
             {

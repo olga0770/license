@@ -31,6 +31,8 @@ const App: React.FC<RouteComponentProps> = () => {
                 <Route exact path="/partners">{isAuthenticated ? <PartnerList/> : <Redirect to="/login" />}</Route>
                 <Route exact path="/users/:id">{isAuthenticated ? <UserDetails/> : <Redirect to="/login" />}</Route>
                 <Route exact path="/partners/:id">{isAuthenticated ? <PartnerDetails/> : <Redirect to="/login" />}</Route>
+                <Route exact path="/partners/users/:id">{isAuthenticated ? <UserDetails/> : <Redirect to="/login" />}</Route>
+
 
                 <Route component={PageNotFound}/>
 

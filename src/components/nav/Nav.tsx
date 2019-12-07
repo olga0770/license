@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {AppBar, Toolbar, Typography, MenuItem, Divider, makeStyles} from "@material-ui/core";
 import {Link, Redirect} from "react-router-dom";
+
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -15,10 +16,29 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const Nav = () => {
+const Nav = props => {
     const classes = useStyles();
 
+    // const [user, setUser] = useState({username: '', password: ''});
+
+
+    // useEffect(() => {
+    //     setUser({
+    //         username: props.user.username,
+    //         password: props.user.password
+    //     });
+    // }, []);
+
+
+
     const [isAuthenticated, setAuth] = useState(true);
+
+    console.log("authenticated user isAuthenticated: ", isAuthenticated);
+
+    console.log("authenticated user nav: ", props);
+
+
+
 
     const logout = () => {
         sessionStorage.removeItem("jwt");
@@ -30,23 +50,27 @@ const Nav = () => {
     }
 
 
+
     return (
+
         <AppBar position="static" color="default">
             <Toolbar>
                 <Typography variant="h6" color="inherit">License System</Typography>
                 <Divider orientation="vertical" style={{marginLeft: 30, marginRight: 15}}/>
 
-                    <MenuItem>
-                        <Link to="/dashboard" style={{color: 'Grey'}}>Dashboard</Link>
-                    </MenuItem>
-                    < MenuItem >
-                        < Link to="/partners" style={{color: 'Grey'}}>Partners</Link>
-                    </MenuItem>
-                    <MenuItem className={classes.title}>
-                        <Link to="/users" style={{color: 'Grey'}}>Users</Link>
-                    </MenuItem>
 
-                    <MenuItem onClick={logout}>< Link to="/login" style={{color: 'Grey'}}>Logout</Link></MenuItem>
+                        <Link to="/dashboard" style={{color: 'Grey', padding: 15}}>Dashboard</Link>
+
+
+                        < Link to="/partners" style={{color: 'Grey', padding: 15}}>Partners</Link>
+
+
+                        <Link to="/users" style={{color: 'Grey', padding: 15}}>Users</Link>
+
+
+                    < Link to="/login" style={{color: 'Grey', padding: 15, position: "absolute", right: 10}} onClick={logout}>Logout</Link>
+
+
             </Toolbar>
         </AppBar>
 )

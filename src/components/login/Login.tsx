@@ -13,6 +13,7 @@ import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import {Redirect} from "react-router-dom";
 
+
 const Login = props => {
     const [user, setUser] = useState({username: '', password: ''});
     const [isAuthenticated, setAuth] = useState(false);
@@ -31,6 +32,7 @@ const Login = props => {
                 if (jwtToken !== null) {
                     sessionStorage.setItem("jwt", jwtToken);
                     setAuth(true);
+                    console.log("authenticated user: ", user)
                 }
                 else {
                     toast.warn("Check your username and password", {

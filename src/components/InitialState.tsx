@@ -38,3 +38,25 @@ export const userDetailsInitialState = {
             companyName: ''
         }
 };
+
+export const partnerDetailsInitialState = {
+    id: '',
+    companyName: '',
+    users: [
+        {
+            id: '',
+            partnerId: '',
+            username: '',
+            password: '',
+            firstName: '',
+            lastName: '',
+            email: '',
+            phone: '',
+            address: '',
+            zip: '',
+            city: '',
+            country: '',
+            role: 'USER',
+        }
+    ]
+};

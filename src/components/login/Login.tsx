@@ -32,7 +32,8 @@ const Login = props => {
                 if (jwtToken !== null) {
                     sessionStorage.setItem("jwt", jwtToken);
                     setAuth(true);
-                    console.log("authenticated user: ", user)
+                    console.log("authenticated user: ", user, "username: ", user.username);
+                    localStorage.setItem("username", user.username);
                 }
                 else {
                     toast.warn("Check your username and password", {

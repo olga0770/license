@@ -19,8 +19,13 @@ import Nav from "../nav/Nav";
 import ReactTable from "react-table";
 import InfoIcon from "@material-ui/icons/Info";
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
+import { ToastContainer, toast } from 'react-toastify';
+import DeleteIcon from "@material-ui/icons/Delete";
+import UserCreate from "../user/UserCreate";
+import UserUpdate from "../user/UserUpdate";
 
 interface IRouterProps extends RouteComponentProps<IPartner>{}
+
 
 const UserDetails: React.SFC<IRouterProps> = ({match}) => {
 
@@ -31,15 +36,25 @@ const UserDetails: React.SFC<IRouterProps> = ({match}) => {
     const [totalUsers, setTotalUsers] = useState(0);
 
 
-
     useEffect(() => {
+        const abortController = new AbortController();
+        fetchPartner();
+        return function cleanup() {
+            abortController.abort()
+        }
+    }, [match.params.id]);
+
+    const fetchPartner = () => {
         const token = sessionStorage.getItem("jwt");
+        const abortController = new AbortController();
+        const signal = abortController.signal;
         fetch(SERVER_URL +`partners/${match.params.id}`,
             {
                 method: "GET",
                 headers: {
                     'Authorization': `Bearer ${token}`
-                }
+                },
+                signal: signal
             }
         )
             .then(res => res.json())
@@ -49,7 +64,92 @@ const UserDetails: React.SFC<IRouterProps> = ({match}) => {
                 setTotalUsers(res.users.length);
                 console.log('partner details', res)})
             .catch(err => {console.log('Getting problems with fetching PartnerDetails')})
-    }, [match.params.id]);
+    };
+
+
+
+    const onDelClick = (userId) => {
+        if (window.confirm('Are you sure you want to delete it?')) {
+            const token = sessionStorage.getItem("jwt");
+            fetch(SERVER_URL +`users/${userId}`,
+                {method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                .then(res => {
+                    toast.success("Deleted", {
+                        position: toast.POSITION.BOTTOM_LEFT
+                    });
+                    fetchPartner();
+                })
+                .catch(err => {
+                    toast.error("Error when deleting", {
+                        position: toast.POSITION.BOTTOM_LEFT
+                    });
+                    console.error(err)
+                })
+        }
+    };
+
+    const addUser = (user) => {
+        const token = sessionStorage.getItem("jwt");
+        fetch(SERVER_URL + 'users',
+            { method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(user)
+            })
+            .then(res => {
+                if (res.status < 400) {
+                    toast.success("Created", {
+                        position: toast.POSITION.BOTTOM_LEFT
+                    });
+                    fetchPartner();
+                }
+                else {
+                    console.log('error:' + res.status);
+                    toast.error("Error when creating", {
+                        position: toast.POSITION.BOTTOM_LEFT
+                    })
+                }
+            })
+            .catch(err => console.error(err))
+    };
+
+    const updateUser = (user, userId) => {
+        const url = SERVER_URL + `users/${userId}`;
+        const token = sessionStorage.getItem("jwt");
+        fetch(url,
+            { method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(user)
+            })
+            .then(res => {
+                if (res.status < 400) {
+                    toast.success("Updated", {
+                        position: toast.POSITION.BOTTOM_LEFT
+                    });
+                    fetchPartner();
+                }
+                else {
+                    console.log('error:' + res.status);
+                    toast.error("Error when updating", {
+                        position: toast.POSITION.BOTTOM_LEFT
+                    })
+                }
+            })
+            .catch(err =>
+                toast.error("Error when updating", {
+                    position: toast.POSITION.BOTTOM_LEFT
+                })
+            )
+    }
 
 
     const columns = [
@@ -117,6 +217,30 @@ const UserDetails: React.SFC<IRouterProps> = ({match}) => {
             Header: 'Country',
             accessor: 'country'
         },
+
+        {
+            sortable: false,
+            filterable: false,
+            width: 50,
+            accessor: '',
+            Cell: ({value, row}) => (
+                <UserUpdate user={row} userId={value} updateUser={updateUser} fetchUsers={fetchPartner}
+                />
+            )
+        },
+
+        {
+            id: 'delbutton',
+            sortable: false,
+            filterable: false,
+            width: 50,
+            accessor: '',
+            Cell: ({ row }) => (
+                <IconButton aria-label="delete" onClick={()=>{onDelClick(row.id); } } style={{marginTop: -10}}>
+                    <DeleteIcon fontSize="small" />
+                </IconButton>
+            )
+        }
     ];
 
 
@@ -162,20 +286,25 @@ const UserDetails: React.SFC<IRouterProps> = ({match}) => {
                     </Grid>
 
                     <Grid item xs={12} style={{paddingLeft: 15, paddingRight: 15, paddingTop: 0}}>
-
                         <Typography variant="h5" style={{color: 'Grey', marginTop: 15}}>Users</Typography>
                         <Divider style={{marginBottom: 15}}/>
+                        <UserCreate addUser={addUser} fetchUsers={fetchPartner} />
+                    </Grid>
 
-                        <Link to="/users" style={{color: 'Grey'}}>Manage users</Link>
+                    <Grid item xs={12} style={{paddingLeft: 15, paddingRight: 15, paddingTop: 0}}>
+
+                        {/*<Link to="/users" style={{color: 'Grey'}}>Manage users</Link>*/}
 
                         <Badge badgeContent={totalUsers} color="secondary" style={{position: "absolute", right: 30}}><PermIdentityIcon /></Badge>
 
-                        <Paper style={{marginTop: 20}}>
+
+                        <Paper style={{marginTop: 30}}>
                             <ReactTable data={partner.users} columns={columns}
                                         filterable={true} pageSize={5} className="-striped -highlight" />
                         </Paper>
 
                     </Grid>
+                    <ToastContainer autoClose={3000} />
 
                 </Grid>}
 

@@ -36,7 +36,6 @@ class UserList extends Component {
         const token = sessionStorage.getItem("jwt");
         fetch(SERVER_URL + 'users',
             {
-
                 method: "GET",
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -52,7 +51,7 @@ class UserList extends Component {
             .catch(err => console.error(err));
     };
 
-    // Delete user
+
     onDelClick = (userId) => {
         if (window.confirm('Are you sure you want to delete it?')) {
             const token = sessionStorage.getItem("jwt");
@@ -77,7 +76,7 @@ class UserList extends Component {
         }
     };
 
-    // Add new user
+
     addUser(user) {
         const token = sessionStorage.getItem("jwt");
         fetch(SERVER_URL + 'users',
@@ -106,7 +105,7 @@ class UserList extends Component {
     }
 
 
-    // Update user
+
     updateUser(user, userId) {
         const url = SERVER_URL + `users/${userId}`;
         const token = sessionStorage.getItem("jwt");

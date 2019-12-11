@@ -1,6 +1,7 @@
 export interface IUser {
     id: string;
     partnerId: string;
+    companyName: string;
     username: string;
     password: string;
     firstName: string;
@@ -20,9 +21,6 @@ export interface IPartner {
 }
 
 
-export interface IUserDetails extends IUser {
-    partner: IPartner | any;
-}
 
 export interface IPartnerDetails extends IPartner{
     users: IUser[];

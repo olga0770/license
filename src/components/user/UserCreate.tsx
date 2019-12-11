@@ -12,9 +12,9 @@ import {
     Typography,
     Divider, Grid
 } from '@material-ui/core';
-import {IPartner, IUserDetails} from "../ITypes";
+import {IPartner, IUser} from "../ITypes";
 import AddIcon from '@material-ui/icons/Add';
-import {userDetailsInitialState} from "../InitialState";
+import {userInitialState} from "../InitialState";
 import { ValidatorForm, TextValidator, SelectValidator} from 'react-material-ui-form-validator';
 import {SERVER_URL} from "../constants";
 
@@ -37,7 +37,7 @@ const UserCreate = (props) => {
     const classes = useStyles();
 
     const [open, setOpen] = useState(false);
-    const [user, setUser] = useState<IUserDetails>(userDetailsInitialState);
+    const [user, setUser] = useState<IUser>(userInitialState);
 
     // Open the modal form
     const handleClickOpen = () => {
@@ -62,7 +62,7 @@ const UserCreate = (props) => {
     };
 
     const cleanInput = () => {
-        setUser(userDetailsInitialState)
+        setUser(userInitialState)
     };
 
     const [partners, setPartner] = useState<IPartner[]>([]);

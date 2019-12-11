@@ -1,19 +1,19 @@
 import React, {useState, useEffect} from 'react';
-import {IUserDetails} from "../ITypes";
+import {IUser} from "../ITypes";
 import {Link, RouteComponentProps, withRouter} from "react-router-dom";
 import {SERVER_URL} from "../constants";
-import {userDetailsInitialState} from "../InitialState";
+import {userInitialState} from "../InitialState";
 import {Breadcrumbs, Divider, Grid, Typography, Card, CardHeader, Avatar, CardContent} from "@material-ui/core";
 import Nav from "../nav/Nav";
 
 
-interface IRouterProps extends RouteComponentProps<IUserDetails>{}
+interface IRouterProps extends RouteComponentProps<IUser>{}
 
 const UserDetails: React.SFC<IRouterProps> = ({match}) => {
 
     console.log(match);
 
-    const [user, setUser] = useState<IUserDetails>(userDetailsInitialState);
+    const [user, setUser] = useState<IUser>(userInitialState);
 
     useEffect(() => {
         const token = sessionStorage.getItem("jwt");
@@ -66,7 +66,7 @@ const UserDetails: React.SFC<IRouterProps> = ({match}) => {
                             <Typography variant="body1"><span style={{display: "inline-block", width: 150}}><b>City:</b></span> <span>{user.city}</span></Typography>
                             <Typography variant="body1"><span style={{display: "inline-block", width: 150}}><b>Country:</b></span> <span>{user.country}</span></Typography>
                             <Divider style={{marginBottom: 15}}/>
-                            <Typography variant="h6">Partner: {user.partner.companyName}</Typography>
+                            <Typography variant="h6">Partner: {user.companyName}</Typography>
                         </CardContent>
                     </Card>
 

@@ -209,7 +209,7 @@ class UserList extends Component {
                 sortable: false,
                 filterable: false,
                 Header: 'Partner',
-                accessor: 'partner.companyName'
+                accessor: 'companyName'
             },
 
             {

@@ -40,6 +40,7 @@ const UserUpdate = (props) => {
         setUser({
             id: props.user.id,
             partnerId: props.user.partnerId,
+            companyName: props.user.companyName,
             username: props.user.username,
             password: props.user.password,
             firstName: props.user.firstName,
@@ -127,6 +128,7 @@ const UserUpdate = (props) => {
                                                    errorMessages={['this field is required']}
                                     />
                                 </FormControl>
+
 
                                 <FormControl fullWidth>
                                     <TextValidator autoFocus fullWidth style={{marginTop: 30}}

@@ -157,12 +157,13 @@ class UserList extends Component {
 
             {
                 Header: 'Username',
-                accessor: 'username'
+                accessor: 'username',
             },
 
             {
                 Header: 'Password',
-                accessor: 'password'
+                accessor: 'password',
+                show: false
             },
 
             {

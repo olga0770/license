@@ -97,7 +97,7 @@ const UserUpdate = (props) => {
                 <EditIcon fontSize="small" />
             </IconButton>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Update User</DialogTitle>
+                <DialogTitle>Update User: {props.user.username}</DialogTitle>
                 <DialogContent>
                     <ValidatorForm
                         onSubmit={handleSave}
@@ -107,27 +107,27 @@ const UserUpdate = (props) => {
 
                             <Grid item xs={12} sm={12} md={6}>
 
-                                <FormControl fullWidth>
-                                    <TextValidator autoFocus fullWidth
-                                                   label="Username"
-                                                   onChange={handleChange}
-                                                   name="username"
-                                                   value={user.username}
-                                                   validators={['required']}
-                                                   errorMessages={['this field is required']}
-                                    />
-                                </FormControl>
+                                {/*<FormControl fullWidth>*/}
+                                {/*    <TextValidator autoFocus fullWidth*/}
+                                {/*                   label="Username"*/}
+                                {/*                   onChange={handleChange}*/}
+                                {/*                   name="username"*/}
+                                {/*                   value={user.username}*/}
+                                {/*                   validators={['required']}*/}
+                                {/*                   errorMessages={['this field is required']}*/}
+                                {/*    />*/}
+                                {/*</FormControl>*/}
 
-                                <FormControl fullWidth>
-                                    <TextValidator autoFocus fullWidth style={{marginTop: 30}}
-                                                   label="Password"
-                                                   onChange={handleChange}
-                                                   name="password"
-                                                   value={user.password}
-                                                   validators={['required']}
-                                                   errorMessages={['this field is required']}
-                                    />
-                                </FormControl>
+                                {/*<FormControl fullWidth>*/}
+                                {/*    <TextValidator autoFocus fullWidth style={{marginTop: 30}}*/}
+                                {/*                   label="Password"*/}
+                                {/*                   onChange={handleChange}*/}
+                                {/*                   name="password"*/}
+                                {/*                   value={user.password}*/}
+                                {/*                   validators={['required']}*/}
+                                {/*                   errorMessages={['this field is required']}*/}
+                                {/*    />*/}
+                                {/*</FormControl>*/}
 
 
                                 <FormControl fullWidth>
@@ -163,12 +163,8 @@ const UserUpdate = (props) => {
                                     />
                                 </FormControl>
 
-                            </Grid>
-
-                            <Grid item xs={12} sm={12} md={6}>
-
                                 <FormControl fullWidth>
-                                    <TextValidator autoFocus fullWidth
+                                    <TextValidator autoFocus fullWidth style={{marginTop: 30}}
                                                    label="Phone"
                                                    onChange={handleChange}
                                                    name="phone"
@@ -177,6 +173,10 @@ const UserUpdate = (props) => {
                                                    errorMessages={['this field is required']}
                                     />
                                 </FormControl>
+
+                            </Grid>
+
+                            <Grid item xs={12} sm={12} md={6}>
 
                                 <FormControl fullWidth>
                                     <TextValidator autoFocus fullWidth style={{marginTop: 30}}

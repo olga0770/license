@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {AppBar, Toolbar, Typography, Divider} from "@material-ui/core";
-import {Link, NavLink, Redirect} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 
 
 const Nav = props => {

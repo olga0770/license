@@ -37,24 +37,19 @@ const UserDetails: React.SFC<IRouterProps> = ({match}) => {
 
 
     useEffect(() => {
-        const abortController = new AbortController();
         fetchPartner();
-        return function cleanup() {
-            abortController.abort()
-        }
     }, [match.params.id]);
+
+
 
     const fetchPartner = () => {
         const token = sessionStorage.getItem("jwt");
-        const abortController = new AbortController();
-        const signal = abortController.signal;
         fetch(SERVER_URL +`partners/${match.params.id}`,
             {
                 method: "GET",
                 headers: {
                     'Authorization': `Bearer ${token}`
-                },
-                signal: signal
+                }
             }
         )
             .then(res => res.json())
@@ -148,8 +143,9 @@ const UserDetails: React.SFC<IRouterProps> = ({match}) => {
                 toast.error("Error when updating", {
                     position: toast.POSITION.BOTTOM_LEFT
                 })
-            )
-    }
+            );
+
+    };
 
 
     const columns = [
@@ -175,7 +171,8 @@ const UserDetails: React.SFC<IRouterProps> = ({match}) => {
 
         {
             Header: 'Password',
-            accessor: 'password'
+            accessor: 'password',
+            show: false
         },
 
         {

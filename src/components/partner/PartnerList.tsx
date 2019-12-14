@@ -50,6 +50,30 @@ class PartnerList extends Component {
             .catch(err => console.error(err));
     };
 
+    onDelClick = (userId) => {
+        if (window.confirm('Are you sure you want to delete it?')) {
+            const token = sessionStorage.getItem("jwt");
+            fetch(SERVER_URL +`partners/delete-all-including-users/${userId}`,
+                {method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                .then(res => {
+                    toast.success("Deleted", {
+                        position: toast.POSITION.BOTTOM_LEFT
+                    });
+                    this.fetchPartners();
+                })
+                .catch(err => {
+                    toast.error("Error when deleting", {
+                        position: toast.POSITION.BOTTOM_LEFT
+                    });
+                    console.error(err)
+                })
+        }
+    };
+
 
 
     render() {
@@ -74,8 +98,18 @@ class PartnerList extends Component {
                 accessor: 'companyName'
             },
 
-
-
+            {
+                id: 'delbutton',
+                sortable: false,
+                filterable: false,
+                width: 50,
+                accessor: '',
+                Cell: ({ row }) => (
+                    <IconButton aria-label="delete" onClick={()=>{this.onDelClick(row.id); } } style={{marginTop: -10}}>
+                        <DeleteIcon fontSize="small" />
+                    </IconButton>
+                )
+            }
         ];
 
         return (

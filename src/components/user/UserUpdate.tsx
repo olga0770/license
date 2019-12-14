@@ -74,12 +74,14 @@ const UserUpdate = (props) => {
 
     useEffect(() => {
         const token = sessionStorage.getItem("jwt");
+        const abortController = new AbortController();
         fetch(SERVER_URL +'partners',
             {
                 method: "GET",
                 headers: {
                     'Authorization': `Bearer ${token}`
-                }
+                },
+                signal: abortController.signal
             }
         )
             .then(res => res.json())
@@ -87,7 +89,8 @@ const UserUpdate = (props) => {
                 setPartner(res);
                 console.log("fetch partners", res)
             })
-            .catch(err => {console.log("Problems with fetching partners", err)})
+            .catch(err => {console.log("Problems with fetching partners", err)});
+        return () => { abortController.abort() }
     }, []);
 
 

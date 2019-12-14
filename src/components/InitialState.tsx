@@ -16,6 +16,11 @@ export const userInitialState = {
 };
 
 
+export const partnerInitialState = {
+    id: '',
+    companyName: ''
+};
+
 export const partnerDetailsInitialState = {
     id: '',
     companyName: '',

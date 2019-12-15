@@ -273,10 +273,12 @@ const UserDetails: React.SFC<IRouterProps> = ({match}) => {
                             <CardContent>
                                 <Typography variant="h5">{partner.companyName}</Typography>
                                 <Divider style={{marginBottom: 15}}/>
-                                <Typography variant="body1"><span style={{display: "inline-block", width: 150}}><b>Company Name:</b></span> <span>{partner.companyName}</span></Typography>
 
-                                <Divider style={{marginBottom: 15}}/>
-                                <Typography variant="h6">Partner: {partner.companyName}</Typography>
+                                <Typography variant="body1"><span style={{display: "inline-block", width: 150}}><b>Address:</b></span> <span>{partner.address}</span></Typography>
+                                <Typography variant="body1"><span style={{display: "inline-block", width: 150}}><b>ZIP:</b></span> <span>{partner.zip}</span></Typography>
+                                <Typography variant="body1"><span style={{display: "inline-block", width: 150}}><b>City:</b></span> <span>{partner.city}</span></Typography>
+                                <Typography variant="body1"><span style={{display: "inline-block", width: 150}}><b>Country:</b></span> <span>{partner.country}</span></Typography>
+
                             </CardContent>
                         </Card>
 

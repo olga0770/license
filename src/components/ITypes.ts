@@ -18,6 +18,10 @@ export interface IUser {
 export interface IPartner {
     id: string;
     companyName: string;
+    address: string;
+    zip: string;
+    city: string;
+    country: string;
 }
 
 

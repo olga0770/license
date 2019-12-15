@@ -18,11 +18,19 @@ export const userInitialState = {
 
 export const partnerInitialState = {
     id: '',
-    companyName: ''
+    companyName: '',
+    address: '',
+    zip: '',
+    city: '',
+    country: ''
 };
 
 export const partnerDetailsInitialState = {
     id: '',
     companyName: '',
+    address: '',
+    zip: '',
+    city: '',
+    country: '',
     users: []
 };

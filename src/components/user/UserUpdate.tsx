@@ -110,28 +110,6 @@ const UserUpdate = (props) => {
 
                             <Grid item xs={12} sm={12} md={6}>
 
-                                {/*<FormControl fullWidth>*/}
-                                {/*    <TextValidator autoFocus fullWidth*/}
-                                {/*                   label="Username"*/}
-                                {/*                   onChange={handleChange}*/}
-                                {/*                   name="username"*/}
-                                {/*                   value={user.username}*/}
-                                {/*                   validators={['required']}*/}
-                                {/*                   errorMessages={['this field is required']}*/}
-                                {/*    />*/}
-                                {/*</FormControl>*/}
-
-                                {/*<FormControl fullWidth>*/}
-                                {/*    <TextValidator autoFocus fullWidth style={{marginTop: 30}}*/}
-                                {/*                   label="Password"*/}
-                                {/*                   onChange={handleChange}*/}
-                                {/*                   name="password"*/}
-                                {/*                   value={user.password}*/}
-                                {/*                   validators={['required']}*/}
-                                {/*                   errorMessages={['this field is required']}*/}
-                                {/*    />*/}
-                                {/*</FormControl>*/}
-
 
                                 <FormControl fullWidth>
                                     <TextValidator autoFocus fullWidth style={{marginTop: 30}}

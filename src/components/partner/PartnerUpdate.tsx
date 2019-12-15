@@ -1,19 +1,18 @@
 import React, {useState} from 'react';
 import {
+    Button,
     Dialog,
     DialogActions,
     DialogContent,
-    DialogTitle,
-    Fab,
-    Button,
-    makeStyles,
-    FormControl,
-    Grid
+    DialogTitle, FormControl, Grid,
+    IconButton,
+    makeStyles
 } from '@material-ui/core';
 import {IPartner} from "../ITypes";
-import AddIcon from '@material-ui/icons/Add';
+import EditIcon from '@material-ui/icons/Edit';
 import {partnerInitialState} from "../InitialState";
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+
 
 const useStyles = makeStyles(theme => ({
     fab: {
@@ -30,53 +29,51 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const PartnerCreate = (props) => {
+const PartnerUpdate = (props) => {
     const classes = useStyles();
 
     const [open, setOpen] = useState(false);
     const [partner, setPartner] = useState<IPartner>(partnerInitialState);
 
-    // Open the modal form
     const handleClickOpen = () => {
+        setPartner({
+            id: props.partner.id,
+            companyName: props.partner.companyName,
+            address: props.partner.address,
+            zip: props.partner.zip,
+            city: props.partner.city,
+            country: props.partner.country
+        });
         setOpen(true);
+
     };
 
-    // Close the modal form
     const handleClose = () => {
         setOpen(false);
-        cleanInput();
     };
 
     const handleChange = (event) => {
         setPartner({...partner, [event.target.name]: event.target.value});
     };
 
-    // Save user and close modal form
     const handleSave = () => {
-        props.addPartner(partner);
+        props.updatePartner(partner, props.partner.id);
         handleClose();
-        cleanInput();
     };
-
-    const cleanInput = () => {
-        setPartner(partnerInitialState)
-    };
-
 
 
     return (
-        <React.Fragment>
-            <Fab color="primary" variant="extended" aria-label="like" className={classes.fab} onClick={handleClickOpen} style={{marginLeft: -5}}>
-                <AddIcon className={classes.extendedIcon} />New partner
-            </Fab>
+        <div>
+            <IconButton aria-label="edit" onClick={handleClickOpen} style={{marginTop: -10}}>
+                <EditIcon fontSize="small" />
+            </IconButton>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>New Partner</DialogTitle>
+                <DialogTitle>Update Partner: {props.partner.companyName}</DialogTitle>
                 <DialogContent>
                     <ValidatorForm
                         onSubmit={handleSave}
                         onError={errors => console.log(errors)}
                     >
-
                         <Grid container spacing={3} style={{padding: 30}}>
 
                             <Grid item xs={12} sm={12} md={6}>
@@ -140,11 +137,11 @@ const PartnerCreate = (props) => {
                                     />
                                 </FormControl>
 
+
                             </Grid>
 
-
-
                         </Grid>
+
 
                         <DialogActions style={{marginRight: -15}}>
                             <Button variant="outlined" color="secondary" className={classes.button} onClick={handleClose}>Cancel</Button>
@@ -153,8 +150,8 @@ const PartnerCreate = (props) => {
                     </ValidatorForm>
                 </DialogContent>
             </Dialog>
-        </React.Fragment>
+        </div>
     );
 };
 
-export default PartnerCreate;
+export default PartnerUpdate;

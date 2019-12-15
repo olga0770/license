@@ -12,6 +12,8 @@ import InfoIcon from "@material-ui/icons/Info";
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import Nav from "../nav/Nav";
 import PartnerCreate from "./PartnerCreate";
+import UserUpdate from "../user/UserUpdate";
+import PartnerUpdate from "./PartnerUpdate";
 
 
 interface IPartnerProps {
@@ -103,6 +105,39 @@ class PartnerList extends Component {
             .catch(err => console.error(err))
     }
 
+    updatePartner(partner, partnerId) {
+        const url = SERVER_URL + `partners/${partnerId}`;
+        const token = sessionStorage.getItem("jwt");
+        fetch(url,
+            { method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(partner)
+            })
+            .then(res => {
+                if (res.status < 400) {
+                    toast.success("Updated", {
+                        position: toast.POSITION.BOTTOM_LEFT
+                    });
+                    this.fetchPartners();
+                }
+                else {
+                    console.log('error:' + res.status);
+                    toast.error("Error when updating", {
+                        position: toast.POSITION.BOTTOM_LEFT
+                    })
+                }
+            })
+            .catch(err =>
+                toast.error("Error when updating", {
+                    position: toast.POSITION.BOTTOM_LEFT
+                })
+            )
+    }
+
+
 
 
     render() {
@@ -125,6 +160,37 @@ class PartnerList extends Component {
             {
                 Header: 'Company Name',
                 accessor: 'companyName'
+            },
+
+            {
+                Header: 'Address',
+                accessor: 'address'
+            },
+
+            {
+                Header: 'ZIP',
+                accessor: 'zip'
+            },
+
+            {
+                Header: 'City',
+                accessor: 'city'
+            },
+
+            {
+                Header: 'Country',
+                accessor: 'country'
+            },
+
+            {
+                sortable: false,
+                filterable: false,
+                width: 50,
+                accessor: '',
+                Cell: ({value, row}) => (
+                    <PartnerUpdate partner={row} partnerId={value} updatePartner={this.updatePartner} fetchPartners={this.fetchPartners}
+                    />
+                )
             },
 
             {

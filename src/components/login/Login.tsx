@@ -23,19 +23,21 @@ const Login = props => {
     };
 
     const login = () => {
+        localStorage.removeItem('username');
         fetch(SERVER_URL + 'login', {
             method: 'POST',
             body: JSON.stringify(user)
         })
             .then(res => {
                 const jwtToken = res.headers.get('Authorization');
+                localStorage.setItem("username", user.username);
                 if (jwtToken !== null) {
                     sessionStorage.setItem("jwt", jwtToken);
                     setAuth(true);
                     console.log("authenticated user: ", user, "username: ", user.username);
-                    localStorage.setItem("username", user.username);
                 }
                 else {
+                    localStorage.removeItem('username');
                     toast.warn("Check your username and password", {
                         position: toast.POSITION.BOTTOM_LEFT
                     })

@@ -11,6 +11,8 @@ import {Link} from "react-router-dom";
 import InfoIcon from "@material-ui/icons/Info";
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import Nav from "../nav/Nav";
+import PartnerCreate from "./PartnerCreate";
+
 
 interface IPartnerProps {
     partners: IPartner[];
@@ -74,6 +76,33 @@ class PartnerList extends Component {
         }
     };
 
+    addPartner(partner) {
+        const token = sessionStorage.getItem("jwt");
+        fetch(SERVER_URL + 'partners',
+            { method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(partner)
+            })
+            .then(res => {
+                if (res.status < 400) {
+                    toast.success("Created", {
+                        position: toast.POSITION.BOTTOM_LEFT
+                    });
+                    this.fetchPartners();
+                }
+                else {
+                    console.log('error:' + res.status);
+                    toast.error("Error when creating", {
+                        position: toast.POSITION.BOTTOM_LEFT
+                    })
+                }
+            })
+            .catch(err => console.error(err))
+    }
+
 
 
     render() {
@@ -125,7 +154,7 @@ class PartnerList extends Component {
 
                         <Typography variant="h4" style={{color: 'Grey', marginTop: 15}}>Partners</Typography>
                         <Divider style={{marginBottom: 15}}/>
-                        {/*<UserCreate addUser={this.addUser} fetchUsers={this.fetchUsers} />*/}
+                        <PartnerCreate addPartner={this.addPartner} fetchPartners={this.fetchPartners} />
                     </Grid>
 
                     <Grid item xs={12} style={{paddingLeft: 15, paddingRight: 15, paddingTop: 0}}>

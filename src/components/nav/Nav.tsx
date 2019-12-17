@@ -21,7 +21,7 @@ const Nav = props => {
         setValue('')
     };
 
-    if (isAuthenticated === false) {
+    if (!isAuthenticated) {
         return (<Redirect to={"/login"}/>);
     }
 

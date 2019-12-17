@@ -12,7 +12,6 @@ import InfoIcon from "@material-ui/icons/Info";
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import Nav from "../nav/Nav";
 import PartnerCreate from "./PartnerCreate";
-import UserUpdate from "../user/UserUpdate";
 import PartnerUpdate from "./PartnerUpdate";
 
 
@@ -63,7 +62,7 @@ class PartnerList extends Component {
                         'Authorization': `Bearer ${token}`
                     }
                 })
-                .then(res => {
+                .then(() => {
                     toast.success("Deleted", {
                         position: toast.POSITION.BOTTOM_LEFT
                     });
@@ -130,7 +129,7 @@ class PartnerList extends Component {
                     })
                 }
             })
-            .catch(err =>
+            .catch(() =>
                 toast.error("Error when updating", {
                     position: toast.POSITION.BOTTOM_LEFT
                 })

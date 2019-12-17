@@ -46,7 +46,7 @@ const Login = props => {
             .catch(err => console.error(err))
     };
 
-    if (isAuthenticated === true) {
+    if (isAuthenticated) {
         return (<Redirect to={"/dashboard"}/>)
     }
 

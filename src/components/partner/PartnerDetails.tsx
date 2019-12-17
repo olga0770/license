@@ -58,7 +58,7 @@ const PartnerDetails: React.SFC<IRouterProps> = ({match}) => {
                 setLoading(false);
                 setTotalUsers(res.users.length);
                 console.log('partner details', res)})
-            .catch(err => {console.log('Getting problems with fetching PartnerDetails')})
+            .catch(() => {console.log('Getting problems with fetching PartnerDetails')})
     };
 
 
@@ -72,7 +72,7 @@ const PartnerDetails: React.SFC<IRouterProps> = ({match}) => {
                         'Authorization': `Bearer ${token}`
                     }
                 })
-                .then(res => {
+                .then(() => {
                     toast.success("Deleted", {
                         position: toast.POSITION.BOTTOM_LEFT
                     });
@@ -139,7 +139,7 @@ const PartnerDetails: React.SFC<IRouterProps> = ({match}) => {
                     })
                 }
             })
-            .catch(err =>
+            .catch(() =>
                 toast.error("Error when updating", {
                     position: toast.POSITION.BOTTOM_LEFT
                 })

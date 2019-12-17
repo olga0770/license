@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
     Dialog,
     DialogActions,
@@ -10,11 +10,10 @@ import {
     FormControl,
     Grid
 } from '@material-ui/core';
-import {IPartner, IUser} from "../ITypes";
+import {IUser} from "../ITypes";
 import AddIcon from '@material-ui/icons/Add';
 import {userInitialState} from "../InitialState";
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
-import {SERVER_URL} from "../constants";
 
 const useStyles = makeStyles(theme => ({
     fab: {
@@ -36,11 +35,6 @@ const PartnerCreateUser = (props) => {
 
     const [open, setOpen] = useState(false);
     const [user, setUser] = useState<IUser>(userInitialState);
-
-    // const handleClickOpen = () => {
-    //     setOpen(true);
-    //     props.partnerId(user)
-    // };
 
     const handleClickOpen = () => {
         setUser({

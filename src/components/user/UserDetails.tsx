@@ -27,7 +27,7 @@ const UserDetails: React.SFC<IRouterProps> = ({match}) => {
         )
             .then(res => res.json())
             .then(res => {setUser(res); console.log('user details', res)})
-            .catch(err => {console.log('Getting problems with fetching UserDetails')})
+            .catch(() => {console.log('Getting problems with fetching UserDetails')})
     }, [match.params.id]);
 
     return (

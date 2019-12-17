@@ -11,7 +11,7 @@ import {
 import {IPartner, IUser} from "../ITypes";
 import EditIcon from '@material-ui/icons/Edit';
 import {userInitialState} from "../InitialState";
-import { ValidatorForm, TextValidator, SelectValidator} from 'react-material-ui-form-validator';
+import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import {SERVER_URL} from "../constants";
 
 const useStyles = makeStyles(theme => ({

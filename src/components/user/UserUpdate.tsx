@@ -96,7 +96,7 @@ const UserUpdate = (props) => {
 
     return (
         <div>
-            <IconButton aria-label="edit" onClick={handleClickOpen} style={{marginTop: -10}}>
+            <IconButton aria-label="edit" onClick={handleClickOpen}>
                 <EditIcon fontSize="small" />
             </IconButton>
             <Dialog open={open} onClose={handleClose}>
@@ -211,7 +211,7 @@ const UserUpdate = (props) => {
                                     <Typography variant="body1">Select Partner</Typography>
                                     <SelectValidator
                                         id="demo-simple-select"
-                                        value={user.partnerId || ''}
+                                        value={user.partnerId}
                                         name="partnerId"
                                         onChange={handleChange}
                                         validators={['required']}
@@ -223,7 +223,6 @@ const UserUpdate = (props) => {
                             </Grid>
 
                         </Grid>
-
 
                         <DialogActions style={{marginRight: -15}}>
                             <Button variant="outlined" color="secondary" className={classes.button} onClick={handleClose}>Cancel</Button>

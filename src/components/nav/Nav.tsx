@@ -38,7 +38,7 @@ const Nav = props => {
                 <Link to="/users" style={{color: 'Grey', padding: 15}}>Users</Link>
 
                 <div style={{padding: 15, position: "absolute", right: 10, textAlign: "right"}}>
-                    <Typography>{value}</Typography>
+                    <Typography>Welcome {value}!</Typography>
                     <Link to="/login" onClick={logout} style={{color: 'Grey'}}>Logout</Link>
                 </div>
 

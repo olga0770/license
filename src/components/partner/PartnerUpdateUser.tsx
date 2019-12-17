@@ -1,19 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {
+    Button,
     Dialog,
     DialogActions,
     DialogContent,
-    DialogTitle,
-    Fab,
-    Button,
-    makeStyles,
-    FormControl,
-    MenuItem,
-    Typography,
-    Divider, Grid
+    DialogTitle, FormControl, Grid,
+    IconButton,
+    makeStyles
 } from '@material-ui/core';
 import {IPartner, IUser} from "../ITypes";
-import AddIcon from '@material-ui/icons/Add';
+import EditIcon from '@material-ui/icons/Edit';
 import {userInitialState} from "../InitialState";
 import { ValidatorForm, TextValidator, SelectValidator} from 'react-material-ui-form-validator';
 import {SERVER_URL} from "../constants";
@@ -33,48 +29,58 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const UserCreate = (props) => {
+const PartnerUpdateUser = (props) => {
     const classes = useStyles();
 
     const [open, setOpen] = useState(false);
     const [user, setUser] = useState<IUser>(userInitialState);
 
-    // Open the modal form
     const handleClickOpen = () => {
+        setUser({
+            id: props.user.id,
+            partnerId: props.user.partnerId,
+            companyName: props.user.companyName,
+            username: props.user.username,
+            password: props.user.password,
+            firstName: props.user.firstName,
+            lastName: props.user.lastName,
+            email: props.user.email,
+            phone: props.user.phone,
+            address: props.user.address,
+            zip: props.user.zip,
+            city: props.user.city,
+            country: props.user.country,
+            role: props.user.role
+        });
         setOpen(true);
+
     };
 
-    // Close the modal form
     const handleClose = () => {
         setOpen(false);
-        cleanInput();
     };
 
     const handleChange = (event) => {
         setUser({...user, [event.target.name]: event.target.value});
     };
 
-    // Save user and close modal form
     const handleSave = () => {
-        props.addUser(user);
+        props.updateUser(user, props.user.id);
         handleClose();
-        cleanInput();
-    };
-
-    const cleanInput = () => {
-        setUser(userInitialState)
     };
 
     const [partners, setPartner] = useState<IPartner[]>([]);
 
     useEffect(() => {
         const token = sessionStorage.getItem("jwt");
+        const abortController = new AbortController();
         fetch(SERVER_URL +'partners',
             {
                 method: "GET",
                 headers: {
                     'Authorization': `Bearer ${token}`
-                }
+                },
+                signal: abortController.signal
             }
         )
             .then(res => res.json())
@@ -82,48 +88,27 @@ const UserCreate = (props) => {
                 setPartner(res);
                 console.log("fetch partners", res)
             })
-            .catch(err => {console.log("Problems with fetching partners", err)})
+            .catch(err => {console.log("Problems with fetching partners", err)});
+        return () => { abortController.abort() }
     }, []);
 
+
     return (
-        <React.Fragment>
-            <Fab color="primary" variant="extended" aria-label="like" className={classes.fab} onClick={handleClickOpen} style={{marginLeft: -5}}>
-                <AddIcon className={classes.extendedIcon} />New user
-            </Fab>
+        <div>
+            <IconButton aria-label="edit" onClick={handleClickOpen}>
+                <EditIcon fontSize="small" />
+            </IconButton>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>New User</DialogTitle>
+                <DialogTitle>Update User: {props.user.username}</DialogTitle>
                 <DialogContent>
                     <ValidatorForm
                         onSubmit={handleSave}
                         onError={errors => console.log(errors)}
                     >
-
                         <Grid container spacing={3} style={{padding: 30}}>
 
                             <Grid item xs={12} sm={12} md={6}>
 
-                                <FormControl fullWidth>
-                                    <TextValidator autoFocus fullWidth
-                                                   label="Username"
-                                                   onChange={handleChange}
-                                                   name="username"
-                                                   value={user.username}
-                                                   validators={['required']}
-                                                   errorMessages={['this field is required']}
-                                    />
-                                </FormControl>
-
-                                <FormControl fullWidth>
-                                    <TextValidator autoFocus fullWidth style={{marginTop: 30}}
-                                                   label="Password"
-                                                   onChange={handleChange}
-                                                   name="password"
-                                                   value={user.password}
-                                                   validators={['required']}
-                                                   errorMessages={['this field is required']}
-                                                   type="password"
-                                    />
-                                </FormControl>
 
                                 <FormControl fullWidth>
                                     <TextValidator autoFocus fullWidth style={{marginTop: 30}}
@@ -158,12 +143,8 @@ const UserCreate = (props) => {
                                     />
                                 </FormControl>
 
-                            </Grid>
-
-                            <Grid item xs={12} sm={12} md={6}>
-
                                 <FormControl fullWidth>
-                                    <TextValidator autoFocus fullWidth
+                                    <TextValidator autoFocus fullWidth style={{marginTop: 30}}
                                                    label="Phone"
                                                    onChange={handleChange}
                                                    name="phone"
@@ -172,6 +153,10 @@ const UserCreate = (props) => {
                                                    errorMessages={['this field is required']}
                                     />
                                 </FormControl>
+
+                            </Grid>
+
+                            <Grid item xs={12} sm={12} md={6}>
 
                                 <FormControl fullWidth>
                                     <TextValidator autoFocus fullWidth style={{marginTop: 30}}
@@ -217,26 +202,10 @@ const UserCreate = (props) => {
                                     />
                                 </FormControl>
 
-                                <input type="hidden" name="role" value={user.role}/>
-
                             </Grid>
 
-                            <Grid item xs={12}>
-                                <FormControl fullWidth style={{marginTop: 30, marginBottom: 15}}>
-                                    <Divider/>
-                                    <Typography variant="body1">Select Partner</Typography>
-                                    <SelectValidator
-                                        id="demo-simple-select"
-                                        value={user.partnerId}
-                                        name="partnerId"
-                                        onChange={handleChange}
-                                        validators={['required']}
-                                        errorMessages={['this field is required']}
-                                    >
-                                        {partners.map((partner: any, index: number) => (<MenuItem key={index} value={partner.id}>{partner.companyName}</MenuItem>))}
-                                    </SelectValidator>
-                                </FormControl>
-                            </Grid>
+                            <input name="partnerId" value={user.partnerId} onChange={handleChange} hidden/>
+
 
                         </Grid>
 
@@ -247,8 +216,8 @@ const UserCreate = (props) => {
                     </ValidatorForm>
                 </DialogContent>
             </Dialog>
-        </React.Fragment>
+        </div>
     );
 };
 
-export default UserCreate;
+export default PartnerUpdateUser;

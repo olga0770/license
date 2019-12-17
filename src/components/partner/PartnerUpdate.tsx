@@ -64,7 +64,7 @@ const PartnerUpdate = (props) => {
 
     return (
         <div>
-            <IconButton aria-label="edit" onClick={handleClickOpen} style={{marginTop: -10}}>
+            <IconButton aria-label="edit" onClick={handleClickOpen}>
                 <EditIcon fontSize="small" />
             </IconButton>
             <Dialog open={open} onClose={handleClose}>

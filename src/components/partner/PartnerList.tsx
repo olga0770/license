@@ -150,7 +150,7 @@ class PartnerList extends Component {
 
                 Cell: ({ row }) => (
                     <Link to={`partners/${row.id}`}>
-                        <IconButton style={{marginTop: -10}}>
+                        <IconButton>
                             <InfoIcon fontSize="small" />
                         </IconButton>
                     </Link>
@@ -159,27 +159,37 @@ class PartnerList extends Component {
 
             {
                 Header: 'Company Name',
-                accessor: 'companyName'
+                accessor: 'companyName',
+                style: { marginTop: 10 },
+                headerStyle: {padding: 10}
             },
 
             {
                 Header: 'Address',
-                accessor: 'address'
+                accessor: 'address',
+                style: { marginTop: 10 },
+                headerStyle: {padding: 10}
             },
 
             {
                 Header: 'ZIP',
-                accessor: 'zip'
+                accessor: 'zip',
+                style: { marginTop: 10 },
+                headerStyle: {padding: 10}
             },
 
             {
                 Header: 'City',
-                accessor: 'city'
+                accessor: 'city',
+                style: { marginTop: 10 },
+                headerStyle: {padding: 10}
             },
 
             {
                 Header: 'Country',
-                accessor: 'country'
+                accessor: 'country',
+                style: { marginTop: 10 },
+                headerStyle: {padding: 10}
             },
 
             {
@@ -200,7 +210,7 @@ class PartnerList extends Component {
                 width: 50,
                 accessor: '',
                 Cell: ({ row }) => (
-                    <IconButton aria-label="delete" onClick={()=>{this.onDelClick(row.id); } } style={{marginTop: -10}}>
+                    <IconButton aria-label="delete" onClick={()=>{this.onDelClick(row.id); } }>
                         <DeleteIcon fontSize="small" />
                     </IconButton>
                 )
@@ -223,7 +233,7 @@ class PartnerList extends Component {
                         <PartnerCreate addPartner={this.addPartner} fetchPartners={this.fetchPartners} />
                     </Grid>
 
-                    <Grid item xs={12} style={{paddingLeft: 15, paddingRight: 15, paddingTop: 0}}>
+                    <Grid item xs={12} style={{paddingLeft: 15, paddingRight: 15, paddingTop: 0, marginTop: -30}}>
 
                         <Badge badgeContent={this.state.totalElements} color="secondary" style={{position: "absolute", right: 40}}><PermIdentityIcon /></Badge>
 

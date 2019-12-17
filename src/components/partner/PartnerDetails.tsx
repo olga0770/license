@@ -21,13 +21,13 @@ import InfoIcon from "@material-ui/icons/Info";
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import { ToastContainer, toast } from 'react-toastify';
 import DeleteIcon from "@material-ui/icons/Delete";
-import UserCreate from "../user/UserCreate";
-import UserUpdate from "../user/UserUpdate";
+import PartnerCreateUser from "./PartnerCreateUser";
+import PartnerUpdateUser from "./PartnerUpdateUser";
 
 interface IRouterProps extends RouteComponentProps<IPartner>{}
 
 
-const UserDetails: React.SFC<IRouterProps> = ({match}) => {
+const PartnerDetails: React.SFC<IRouterProps> = ({match}) => {
 
     console.log(match);
 
@@ -157,7 +157,7 @@ const UserDetails: React.SFC<IRouterProps> = ({match}) => {
 
             Cell: ({ row }) => (
                 <Link to={`users/${row.id}`}>
-                    <IconButton style={{marginTop: -10}}>
+                    <IconButton>
                         <InfoIcon fontSize="small" />
                     </IconButton>
                 </Link>
@@ -166,7 +166,9 @@ const UserDetails: React.SFC<IRouterProps> = ({match}) => {
 
         {
             Header: 'Username',
-            accessor: 'username'
+            accessor: 'username',
+            style: { marginTop: 10 },
+            headerStyle: {padding: 10}
         },
 
         {
@@ -177,42 +179,66 @@ const UserDetails: React.SFC<IRouterProps> = ({match}) => {
 
         {
             Header: 'First Name',
-            accessor: 'firstName'
+            accessor: 'firstName',
+            style: { marginTop: 10 },
+            headerStyle: {padding: 10}
         },
 
         {
             Header: 'Last Name',
-            accessor: 'lastName'
+            accessor: 'lastName',
+            style: { marginTop: 10 },
+            headerStyle: {padding: 10}
         },
 
         {
             Header: 'E-mail',
-            accessor: 'email'
+            accessor: 'email',
+            style: { marginTop: 10 },
+            headerStyle: {padding: 10}
         },
 
         {
             Header: 'Phone',
-            accessor: 'phone'
+            accessor: 'phone',
+            style: { marginTop: 10 },
+            headerStyle: {padding: 10}
         },
 
         {
             Header: 'Address',
-            accessor: 'address'
+            accessor: 'address',
+            style: { marginTop: 10 },
+            headerStyle: {padding: 10}
         },
 
         {
             Header: 'ZIP',
-            accessor: 'zip'
+            accessor: 'zip',
+            style: { marginTop: 10 },
+            headerStyle: {padding: 10}
         },
 
         {
             Header: 'City',
-            accessor: 'city'
+            accessor: 'city',
+            style: { marginTop: 10 },
+            headerStyle: {padding: 10}
         },
 
         {
             Header: 'Country',
-            accessor: 'country'
+            accessor: 'country',
+            style: { marginTop: 10 },
+            headerStyle: {padding: 10}
+        },
+
+        {
+            sortable: false,
+            filterable: false,
+            Header: 'Partner',
+            accessor: 'partnerId',
+            show: false
         },
 
         {
@@ -221,7 +247,7 @@ const UserDetails: React.SFC<IRouterProps> = ({match}) => {
             width: 50,
             accessor: '',
             Cell: ({value, row}) => (
-                <UserUpdate user={row} userId={value} updateUser={updateUser} fetchUsers={fetchPartner}
+                <PartnerUpdateUser user={row} userId={value} updateUser={updateUser} fetchUsers={fetchPartner}
                 />
             )
         },
@@ -233,7 +259,7 @@ const UserDetails: React.SFC<IRouterProps> = ({match}) => {
             width: 50,
             accessor: '',
             Cell: ({ row }) => (
-                <IconButton aria-label="delete" onClick={()=>{onDelClick(row.id); } } style={{marginTop: -10}}>
+                <IconButton aria-label="delete" onClick={()=>{onDelClick(row.id); } } >
                     <DeleteIcon fontSize="small" />
                 </IconButton>
             )
@@ -256,51 +282,44 @@ const UserDetails: React.SFC<IRouterProps> = ({match}) => {
                     </Breadcrumbs>
 
                     <Typography variant="h4" style={{color: 'Grey', marginTop: 15}}>Partner: {partner.companyName}</Typography>
-                    <Divider style={{marginBottom: 15}}/>
+                    <Divider/>
                 </Grid>
             </Grid>
-
 
             {loading ? <Typography style={{padding: 15}}>Loading...</Typography>:
 
 
-                <Grid container spacing={0} alignItems="center" justify="center">
+                <Grid container style={{padding: 15}}>
 
-                    <Grid item xs={12} sm={10} md={6} lg={3}>
+                    <Grid item xs={12} sm={10} md={6} lg={3} style={{marginLeft: 15, marginTop: -15}}>
 
                         <Card>
-                            <CardHeader avatar={<Avatar aria-label="recipe">P</Avatar>}/>
+                            <CardHeader avatar={<Avatar aria-label="recipe">P</Avatar>} style={{marginBottom: -15}}/>
                             <CardContent>
                                 <Typography variant="h5">{partner.companyName}</Typography>
                                 <Divider style={{marginBottom: 15}}/>
-
-                                <Typography variant="body1"><span style={{display: "inline-block", width: 150}}><b>Address:</b></span> <span>{partner.address}</span></Typography>
-                                <Typography variant="body1"><span style={{display: "inline-block", width: 150}}><b>ZIP:</b></span> <span>{partner.zip}</span></Typography>
-                                <Typography variant="body1"><span style={{display: "inline-block", width: 150}}><b>City:</b></span> <span>{partner.city}</span></Typography>
-                                <Typography variant="body1"><span style={{display: "inline-block", width: 150}}><b>Country:</b></span> <span>{partner.country}</span></Typography>
-
+                                <Typography>{partner.address}, {partner.zip} {partner.city}, {partner.country}</Typography>
                             </CardContent>
                         </Card>
 
                     </Grid>
 
-                    <Grid item xs={12} style={{paddingLeft: 15, paddingRight: 15, paddingTop: 0}}>
+                    <Grid item xs={12} style={{paddingLeft: 15, paddingRight: 15, paddingTop: 0, marginBottom: 50}}>
                         <Typography variant="h5" style={{color: 'Grey', marginTop: 15}}>Users</Typography>
                         <Divider style={{marginBottom: 15}}/>
-                        <UserCreate addUser={addUser} fetchUsers={fetchPartner} />
+                        <PartnerCreateUser addUser={addUser} fetchUsers={fetchPartner} partnerId={partner.id} />
                     </Grid>
 
-                    <Grid item xs={12} style={{paddingLeft: 15, paddingRight: 15, paddingTop: 0}}>
-
-                        {/*<Link to="/users" style={{color: 'Grey'}}>Manage users</Link>*/}
+                    <Grid item xs={12} style={{paddingLeft: 15, paddingRight: 15, marginTop: -65}}>
 
                         <Badge badgeContent={totalUsers} color="secondary" style={{position: "absolute", right: 30}}><PermIdentityIcon /></Badge>
-
 
                         <Paper style={{marginTop: 30}}>
                             <ReactTable data={partner.users} columns={columns}
                                         filterable={true} pageSize={5} className="-striped -highlight" />
                         </Paper>
+
+                        <Divider style={{marginBottom: 30, marginTop: 30}}/>
 
                     </Grid>
                     <ToastContainer autoClose={3000} />
@@ -313,5 +332,5 @@ const UserDetails: React.SFC<IRouterProps> = ({match}) => {
     );
 };
 
-export default withRouter(UserDetails);
+export default withRouter(PartnerDetails);
 

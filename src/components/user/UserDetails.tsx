@@ -44,16 +44,16 @@ const UserDetails: React.SFC<IRouterProps> = ({match}) => {
                     </Breadcrumbs>
 
                     <Typography variant="h4" style={{color: 'Grey', marginTop: 15}}>User: {user.username}</Typography>
-                    <Divider style={{marginBottom: 15}}/>
+                    <Divider/>
                 </Grid>
             </Grid>
 
 
-            <Grid container spacing={0} alignItems="center" justify="center">
-                <Grid item xs={12} sm={10} md={6} lg={3}>
+            <Grid container spacing={0}>
+                <Grid item xs={12} sm={10} md={6} lg={3} style={{marginLeft: 30}}>
 
                     <Card>
-                        <CardHeader avatar={<Avatar aria-label="recipe">U</Avatar>}/>
+                        <CardHeader avatar={<Avatar aria-label="recipe">U</Avatar>} style={{marginBottom: -15}}/>
                         <CardContent>
                             <Typography variant="h5">{user.username}</Typography>
                             <Divider style={{marginBottom: 15}}/>

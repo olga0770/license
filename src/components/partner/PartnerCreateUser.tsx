@@ -8,14 +8,12 @@ import {
     Button,
     makeStyles,
     FormControl,
-    MenuItem,
-    Typography,
-    Divider, Grid
+    Grid
 } from '@material-ui/core';
 import {IPartner, IUser} from "../ITypes";
 import AddIcon from '@material-ui/icons/Add';
 import {userInitialState} from "../InitialState";
-import { ValidatorForm, TextValidator, SelectValidator} from 'react-material-ui-form-validator';
+import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import {SERVER_URL} from "../constants";
 
 const useStyles = makeStyles(theme => ({
@@ -33,18 +31,38 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const UserCreate = (props) => {
+const PartnerCreateUser = (props) => {
     const classes = useStyles();
 
     const [open, setOpen] = useState(false);
     const [user, setUser] = useState<IUser>(userInitialState);
 
-    // Open the modal form
+    // const handleClickOpen = () => {
+    //     setOpen(true);
+    //     props.partnerId(user)
+    // };
+
     const handleClickOpen = () => {
+        setUser({
+            id: '',
+            partnerId: props.partnerId,
+            companyName: '',
+            username: '',
+            password: '',
+            firstName: '',
+            lastName: '',
+            email: '',
+            phone: '',
+            address: '',
+            zip: '',
+            city: '',
+            country: '',
+            role: ''
+        });
         setOpen(true);
+
     };
 
-    // Close the modal form
     const handleClose = () => {
         setOpen(false);
         cleanInput();
@@ -54,7 +72,6 @@ const UserCreate = (props) => {
         setUser({...user, [event.target.name]: event.target.value});
     };
 
-    // Save user and close modal form
     const handleSave = () => {
         props.addUser(user);
         handleClose();
@@ -218,25 +235,10 @@ const UserCreate = (props) => {
                                 </FormControl>
 
                                 <input type="hidden" name="role" value={user.role}/>
+                                <input name="partnerId" value={user.partnerId} onChange={handleChange} hidden/>
 
                             </Grid>
 
-                            <Grid item xs={12}>
-                                <FormControl fullWidth style={{marginTop: 30, marginBottom: 15}}>
-                                    <Divider/>
-                                    <Typography variant="body1">Select Partner</Typography>
-                                    <SelectValidator
-                                        id="demo-simple-select"
-                                        value={user.partnerId}
-                                        name="partnerId"
-                                        onChange={handleChange}
-                                        validators={['required']}
-                                        errorMessages={['this field is required']}
-                                    >
-                                        {partners.map((partner: any, index: number) => (<MenuItem key={index} value={partner.id}>{partner.companyName}</MenuItem>))}
-                                    </SelectValidator>
-                                </FormControl>
-                            </Grid>
 
                         </Grid>
 
@@ -251,4 +253,4 @@ const UserCreate = (props) => {
     );
 };
 
-export default UserCreate;
+export default PartnerCreateUser;

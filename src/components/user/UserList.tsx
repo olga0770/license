@@ -289,7 +289,7 @@ class UserList extends Component {
                         <Paper style={{marginTop: 30}}>
                             {this.state.loading ? <Typography style={{padding: 15}}>Loading...</Typography>:
                                 <ReactTable data={this.state.users} columns={columns}
-                                            filterable={true} defaultPageSize={5} className="-striped -highlight" style={{padding: 5}}/> }
+                                            filterable={true} defaultPageSize={5} className="-striped -highlight"/> }
                         </Paper>
                     </Grid>
                     <ToastContainer autoClose={3000} />

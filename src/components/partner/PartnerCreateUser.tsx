@@ -82,25 +82,6 @@ const PartnerCreateUser = (props) => {
         setUser(userInitialState)
     };
 
-    const [partners, setPartner] = useState<IPartner[]>([]);
-
-    useEffect(() => {
-        const token = sessionStorage.getItem("jwt");
-        fetch(SERVER_URL +'partners',
-            {
-                method: "GET",
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            }
-        )
-            .then(res => res.json())
-            .then(res => {
-                setPartner(res);
-                console.log("fetch partners", res)
-            })
-            .catch(err => {console.log("Problems with fetching partners", err)})
-    }, []);
 
     return (
         <React.Fragment>

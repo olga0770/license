@@ -38,7 +38,7 @@ const PartnerDetails: React.SFC<IRouterProps> = ({match}) => {
 
     useEffect(() => {
         fetchPartner();
-    }, [match.params.id]);
+    }, []);
 
 
 
@@ -167,7 +167,7 @@ const PartnerDetails: React.SFC<IRouterProps> = ({match}) => {
         {
             Header: 'Username',
             accessor: 'username',
-            style: { marginTop: 10 },
+            style: { marginTop: 10, padding: 10 },
             headerStyle: {padding: 10}
         },
 
@@ -180,56 +180,56 @@ const PartnerDetails: React.SFC<IRouterProps> = ({match}) => {
         {
             Header: 'First Name',
             accessor: 'firstName',
-            style: { marginTop: 10 },
+            style: { marginTop: 10, padding: 10 },
             headerStyle: {padding: 10}
         },
 
         {
             Header: 'Last Name',
             accessor: 'lastName',
-            style: { marginTop: 10 },
+            style: { marginTop: 10, padding: 10 },
             headerStyle: {padding: 10}
         },
 
         {
             Header: 'E-mail',
             accessor: 'email',
-            style: { marginTop: 10 },
+            style: { marginTop: 10, padding: 10 },
             headerStyle: {padding: 10}
         },
 
         {
             Header: 'Phone',
             accessor: 'phone',
-            style: { marginTop: 10 },
+            style: { marginTop: 10, padding: 10 },
             headerStyle: {padding: 10}
         },
 
         {
             Header: 'Address',
             accessor: 'address',
-            style: { marginTop: 10 },
+            style: { marginTop: 10, padding: 10 },
             headerStyle: {padding: 10}
         },
 
         {
             Header: 'ZIP',
             accessor: 'zip',
-            style: { marginTop: 10 },
+            style: { marginTop: 10, padding: 10 },
             headerStyle: {padding: 10}
         },
 
         {
             Header: 'City',
             accessor: 'city',
-            style: { marginTop: 10 },
+            style: { marginTop: 10, padding: 10 },
             headerStyle: {padding: 10}
         },
 
         {
             Header: 'Country',
             accessor: 'country',
-            style: { marginTop: 10 },
+            style: { marginTop: 10, padding: 10 },
             headerStyle: {padding: 10}
         },
 
